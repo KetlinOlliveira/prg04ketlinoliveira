@@ -1,5 +1,6 @@
  <div align = "center"> 
-   
+   <img src = "infraestructure/assets/icons/patinha.ico" width = "70px">
+  
   ## 🐈​​ FindPet | Sistema de Doações de Animais de Estimação
  
  </div>
