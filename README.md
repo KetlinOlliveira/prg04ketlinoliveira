@@ -26,6 +26,11 @@ O **FindPet** é um sistema web voltado para a adoção consciente e responsáve
 
 ---
 
+## 🎨 Palheta de cores
+
+
+<img width="1689" height="621" alt="Captura de tela 2026-03-27 003016" src="https://github.com/user-attachments/assets/464ed336-5209-4a0a-80d3-5b3ccc85ca4b" />
+
 
 ## 🗂️ Estrutura do Projeto
 
