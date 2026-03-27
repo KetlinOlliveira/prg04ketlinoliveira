@@ -1,0 +1,28 @@
+.container-sandbox{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5px;
+    background-color: #f0f0f0;
+
+}
+.p-sand{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+.container-sandbody{
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 50px;
+}
