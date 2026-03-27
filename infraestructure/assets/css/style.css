@@ -8,3 +8,32 @@
     height: auto;
 }
 
+.header{
+    background-color: #fff;
+    box-shadow:  0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    height: 58px;
+}
+
+.nav-menu{
+    display: flex;
+    list-style: none;
+    gap: 32px;
+}
+.nav-menu a{
+    text-decoration: none;
+    color: #4b5563;
+    transition: color 0.3s;
+}
+.nav-menu a:hover{
+    color: #f59e0b;
+}

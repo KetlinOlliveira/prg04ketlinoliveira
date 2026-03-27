@@ -1,0 +1,214 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --cafe:    #3B1F10;
+    --mogno:   #6B3520;
+    --cobre:   #A05535;
+    --caramelo:#D4956A;
+    --pessego: #F0DBC8;
+    --rosa:    #C94C5E;
+    --ambar:   #F5C84A;
+    --creme:   #FAF5EE;
+    --texto:   #3B1F10;
+}
+header {
+    background-color: var(--cafe);
+    padding: 64px 48px 56px;
+    text-align: center;
+}
+
+header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caramelo);
+    margin-bottom: 16px;
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+header h1 span {
+    color: var(--caramelo);
+}
+
+header p {
+    font-size: 15px;
+    color: var(--pessego);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+
+.swatches-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--cafe);
+    margin-bottom: 36px;
+    }
+
+.swatches {
+    display: flex;
+    height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    gap: 3px;
+}
+
+.swatch {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px 14px;
+    cursor: default;
+    transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.swatch:hover {
+    flex: 3.5;
+}
+
+.swatch-info {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition-delay: 0.1s;
+}
+
+.swatch:hover .swatch-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.swatch-name {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
+
+.swatch-hex {
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    opacity: 0.75;
+    white-space: nowrap;
+}
+
+.swatch-role {
+    font-size: 11px;
+    margin-top: 6px;
+    opacity: 0.65;
+    white-space: nowrap;
+}
+
+/* cores individuais */
+.sw-cafe    { background: var(--cafe); }
+.sw-cafe    .swatch-name, .sw-cafe .swatch-hex, .sw-cafe .swatch-role { color: var(--caramelo); }
+
+.sw-mogno   { background: var(--mogno); }
+.sw-mogno   .swatch-name, .sw-mogno .swatch-hex, .sw-mogno .swatch-role { color: #E8B48A; }
+
+.sw-cobre   { background: var(--cobre); }
+.sw-cobre   .swatch-name, .sw-cobre .swatch-hex, .sw-cobre .swatch-role { color: var(--pessego); }
+
+.sw-caramelo { background: var(--caramelo); }
+.sw-caramelo .swatch-name, .sw-caramelo .swatch-hex, .sw-caramelo .swatch-role { color: var(--cafe); }
+
+.sw-pessego { background: var(--pessego); border: 1px solid #E2C8B0; }
+.sw-pessego .swatch-name, .sw-pessego .swatch-hex, .sw-pessego .swatch-role { color: var(--mogno); }
+
+.sw-rosa    { background: var(--rosa); }
+.sw-rosa    .swatch-name, .sw-rosa .swatch-hex, .sw-rosa .swatch-role { color: #FDE8EC; }
+
+.sw-ambar   { background: var(--ambar); }
+.sw-ambar   .swatch-name, .sw-ambar .swatch-hex, .sw-ambar .swatch-role { color: var(--cafe); }
+
+.sw-creme   { background: var(--creme); border: 1px solid #E2C8B0; }
+.sw-creme   .swatch-name, .sw-creme .swatch-hex, .sw-creme .swatch-role { color: var(--mogno); }
+
+/* ── DIVIDER ── */
+.divider {
+    width: 60px;
+    height: 2px;
+    background: var(--caramelo);
+    margin: 0 auto 48px;
+    border-radius: 2px;
+}
+
+/* ── PSICOLOGIA ── */
+    .psicologia-section {
+    background: var(--cafe);
+    padding: 72px 48px;
+}
+
+.psicologia-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.psicologia-section .section-label { color: var(--caramelo); }
+.psicologia-section .section-title { color: var(--creme); }
+
+.psy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.psy-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 14px 18px;
+    }
+
+.psy-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.psy-text {
+    font-size: 13px;
+    color: var(--pessego);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.psy-text strong {
+    color: var(--creme);
+    font-weight: 500;
+}
+
+
+
