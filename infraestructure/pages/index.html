@@ -14,123 +14,47 @@
 </head>
 <body>
 <div class="page-shell">
- 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">🐾</div>
-        <nav class="sidebar-nav">
-            <a href="#" class="sidebar-item active">
-                <span class="sidebar-icon">🏠</span>
-                <span class="sidebar-label">Feed</span>
-            </a>
-            <a href="#" class="sidebar-item">
-                <span class="sidebar-icon">🧩</span>
-                <span class="sidebar-label">Quiz</span>
-            </a>
-            <a href="#" class="sidebar-item">
-                <span class="sidebar-icon">💬</span>
-                <span class="sidebar-label">Chat</span>
-            </a>
-            <a href="#" class="sidebar-item">
-                <span class="sidebar-icon">📋</span>
-                <span class="sidebar-label">Cuidados</span>
-            </a>
-            <a href="palheta.html" class="sidebar-item" target="_blank">
-                <span class="sidebar-icon">🎨</span>
-                <span class="sidebar-label">Palheta</span>
-            </a>
-            <a href="atividade-3.html" class="sidebar-item" target="_blank">
-                <span class="sidebar-icon">📬</span>
-                <span class="sidebar-label">Contato</span>
-            </a>
-            <a href="sandbox.html" class="sidebar-item" target="_blank">
-                <span class="sidebar-icon">🧪</span>
-                <span class="sidebar-label">SandBox</span>
-            </a>
+
+
+        <!-- topbar (menu principal)-->    
+    <header class="topbar">
+        <div class="topbar-brand-name">Find<span>Pet</span></div>
+
+        <!-- TRUQUE CSS-ONLY: checkbox escondido controla o menu -->
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+
+        <div class="topbar-right">
+            <button class="btn-adotar">Adotar um amigo</button>
+            <label for="menu-toggle" class="btn-menu">☰</label>
+        </div>
+
+        <!-- MENU DROPDOWN -->
+        <nav class="topbar-nav">
+            <label for="menu-toggle" class="menu-close">✕</label>
+            <a href="#">Início</a>
+            <a href="palheta.html">Palheta</a>
+            <a href="atividade-3.html">Contato</a>
+            <a href="sandbox.html">SandBox</a>
         </nav>
-    </aside>
+    </header>
 
- 
-    <div class="main-content">
- 
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <div class="topbar-brand-name">Find<span>Pet</span></div>
-            <nav class="topbar-nav">
-                <a href="#" class="active">Início</a>
-                <a href="palheta.html" target="_blank">Palheta</a>
-                <a href="atividade-3.html" target="_blank">Contato</a>
-                <a href="sandbox.html" target="_blank">SandBox</a>
-            </nav>
-            <button class="btn-outline">Entrar</button>
-        </header>
- 
-        <!-- HERO -->
-        <section class="hero">
- 
-            <div class="hero-dots">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
- 
-            <!-- FRASE -->
-            <div class="hero-top">
-                <div class="hero-eyebrow">
-                    <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">Adoção responsável</span>
-                    <span class="eyebrow-line"></span>
-                </div>
-                <h1 class="hero-quote">
-                    Todo lar que acolhe um animal torna-se <em>mais completo.</em>
-                </h1>
-                <p class="hero-subdesc">
-                    Adotar é um compromisso para a vida toda — com responsabilidade, afeto e transparência.
-                </p>
-            </div>
- 
-            <!-- IMAGEM -->
-            <div class="hero-illustration">
-                <img
-                    src="../assets/images/hero-animais.png"
-                    alt="Ilustração de animais reunidos"
-                >
-            </div>
- 
-            <!-- BOTÕES + STATS -->
-            <div class="hero-bottom">
-                <div class="hero-actions">
-                    <a href="#" class="btn-adotar">🐾 &nbsp;Adotar agora</a>
-                    <a href="#" class="btn-quiz">🧩 &nbsp;Fazer o Quiz</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-num">340+</span>
-                        <span class="stat-label">animais disponíveis</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">1.2k</span>
-                        <span class="stat-label">adoções realizadas</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">18</span>
-                        <span class="stat-label">espécies legalizadas</span>
-                    </div>
-                    
-                    
+      <!-- HERO TELA CHEIA -->
+    <section class="hero">
+        
+        <img class="hero-bg" src="../assets/images/hero-animais.png" alt="Gato siamês">
+        <div class="hero-overlay"></div>
 
-                </div>
-            </div>
- 
-        </section>
- 
+         <h1 class="hero-headline">
+        Todo lar que acolhe um animal torna-se <em>mais completo.</em>
+        </h1>
+        <div class="hero-bottom">
+        <button class="btn-adotar-hero">Adotar agora →</button>
+        
+        </div>
+
+        <p class="hero-caption">Adotar é um compromisso para a vida toda — com responsabilidade, afeto e transparência.</p>
+    </section>
     </div>
-</div>
- 
  
 </body>
 </html>
