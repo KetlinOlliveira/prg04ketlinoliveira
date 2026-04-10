@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon patinha" href="../assets/icons/patinha.ico" type="icons/patinha.icon">
+    <link rel="stylesheet" href="../assets/css/style-login.css">
+    <title>Login - FindPet</title>
+</head>
+<body>
+    <div class="main-wrapper">
+    <div class="login-card">
+        <section class="form-container">
+            <a href="../pages/index.html" class="close-login">✕</a>
+            <div class="brand">
+                <img src="../assets/icons/patinha.ico" alt="logo" width="30">
+                <div class="nome-logo">Find<span>Pet</span></div>
+            </div>
+            
+            <h2>Bem-vindo de volta!</h2>
+            <p class="subtitle">Por favor, insira seus dados para continuar.</p>
+
+            <button class="btn-google">
+                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" width="18">
+                Entrar com Google
+            </button>
+
+            <div class="divider"><span>ou</span></div>
+
+            <form id="loginForm">
+                <div class="input-field">
+                    <label>Usuário</label>
+                    <input type="text" id="usuario" placeholder="Seu nome de usuário">
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com">
+                </div>
+                <div class="input-field">
+                    <label>Senha</label>
+                    <input type="password" id="senha" placeholder="••••••••">
+                </div>
+
+                <div class="extra-options">
+                    <label><input type="checkbox"> Lembrar-me</label>
+                    <a href="#">Esqueceu a senha?</a>
+                </div>
+
+                <button type="button" class="btn-login" onclick="realizarLogin()">Entrar</button>
+            </form>
+            <p id="mensagem"></p>
+        </section>
+
+        <section class="image-container">
+            
+            <button class="arrow-button" onclick="toggleUsers()">
+                <i class="fas fa-arrow-right"></i> →
+            </button>
+
+            <div id="user-panel" class="user-panel hidden">
+                <div class="panel-header">
+                    <h4>Usuários</h4>
+                    <button class="close-painel" onclick="toggleUsers()">✕</button>
+                </div>
+                <ul id="lista-usuarios"></ul>
+            </div>
+        </section>
+    </div>
+</div>
+ <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -73,7 +73,7 @@ html, body {
 .btn-menu:hover { opacity: 0.7; }
 
 /* ── BOTÃO ADOTAR ── */
-.btn-adotar {
+.btn-adotar , .btn-login {
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
     font-weight: 500;
@@ -88,7 +88,14 @@ html, body {
     transition: transform 0.28s, box-shadow 0.28s;
     box-shadow: 0 8px 28px rgba(201,76,94,0.38);
 }
-.btn-adotar:hover {
+
+.btn-login{
+    background: var(--cobre);
+     box-shadow: 0 8px 28px rgba(160,85,53,0.38);
+    transition: transform 0.28s, box-shadow 0.28s;
+    box-shadow: 0 8px 28px rgba(201,76,94,0.38);
+}
+.btn-adotar:hover, .btn-login:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 38px rgba(201,76,94,0.5);
 }
