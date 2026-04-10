@@ -1,0 +1,52 @@
+body { background-color: #FAF5EE; font-family: 'Inter', sans-serif; margin: 0; }
+        .dash-wrapper { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .dash-header h1 { color: #3B1F10; font-size: 2rem; }
+        
+        .user-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Card identico à referência */
+        .admin-user-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 1px solid transparent;
+        }
+        .admin-user-card:hover { transform: translateY(-5px); border-color: #D4956A; }
+
+        .avatar-circle {
+            width: 65px; height: 65px;
+            background: #A05535;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-info { flex-grow: 1; }
+        .user-info h3 { margin: 0; color: #3B1F10; font-size: 1.1rem; }
+        .user-info p { margin: 4px 0; color: #6B3520; font-size: 0.85rem; }
+        .user-info span { 
+            background: #F0DBC8; color: #A05535; 
+            padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; 
+        }
+
+        .action-menu { position: relative; }
+        .btn-action {
+            background: #FAF5EE; border: 1px solid #D4956A;
+            color: #3B1F10; padding: 8px 12px; border-radius: 8px;
+            cursor: pointer; font-size: 0.8rem; font-weight: 600;
+        }
