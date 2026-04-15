@@ -1,4 +1,4 @@
-/* Importação de fonte moderna */
+/* Importação e Reset */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -16,51 +16,45 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
+    
 }
 
-/* Container Central Suspenso */
+/* ── CONFIGURAÇÃO MOBILE (Padrão) ── */
+
 .login-card {
     background: white;
-    width: 1250px;
-    height: 760px;
+    
+    width: 100%;
+    max-width: 100%; /* Ocupa a tela toda no mobile */
+    min-height: auto;/* Altura total no mobile */
     display: flex;
+    flex-direction: column;
+    overflow-y: auto;
     border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
 }
 
-/* Lado do Formulário */
 .form-container { 
     flex: 1; 
-    padding: 50px; 
+    padding: 40px 20px; 
     display: flex; 
-    flex-direction: column; }
+    flex-direction: column; 
+}
 
-.brand { 
-    display: flex; 
-    flex-direction: column;
-    align-items: center; 
-    gap: 8px; 
-    font-weight: 600; 
-    color: #777; 
-    margin-bottom: 30px; }
+/* Esconde a imagem e o painel lateral no mobile para focar no login */
+.image-container {
+    display: none;
+}
 
-h2 { text-align: center; 
-    color: var(--cafe); 
-    font-size: 24px; 
-    margin-bottom: 8px; }
-
-.subtitle { color: #888; font-size: 14px; margin-bottom: 25px; text-align: center; }
-
+/* Elementos do Formulário (Ajustados para Mobile) */
+.brand { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 30px; }
+.brand img { width: 60px; }
 .brand .nome-logo { font-size: 20px; font-weight: 700; color: var(--cafe); }
 .brand .nome-logo span { color: var(--rosa); }
 
-.brand img { 
-    width: 70px; 
-}
+h2 { text-align: center; color: var(--cafe); font-size: 24px; margin-bottom: 8px; }
+.subtitle { color: #888; font-size: 14px; margin-bottom: 25px; text-align: center; }
 
-/* Botão Google Estilizado */
 .btn-google {
     width: 100%;
     padding: 10px;
@@ -71,26 +65,35 @@ h2 { text-align: center;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    cursor: pointer;
-    font-weight: 500;
 }
 
-.divider { text-align: center; margin: 20px 0; position: relative; }
-.divider::before { content: ""; position: absolute; width: 100%; height: 1px; background: #eee; left: 0; top: 50%; }
-.divider span { background: white; padding: 0 10px; position: relative; color: #999; font-size: 12px; }
+.divider { 
+    text-align: center;
+     margin: 20px 0; 
+     position: relative;
+}
+.divider::before { 
+    content: ""; 
+    position: absolute; 
+    width: 100%; 
+    height: 1px; 
+    background: #eee; 
+    left: 0; 
+    top: 50%; 
+}
+.divider span {
+    background: white; 
+    padding: 0 10px; 
+    position: relative; 
+    color: #999; 
+    font-size: 12px;
+}
 
-/* Inputs Estilizados (Linhas) */
-.input-field { margin-bottom: 15px; }
+.input-field { 
+    margin-bottom: 15px;
+ }
 .input-field label { display: block; font-size: 13px; margin-bottom: 5px; color: #555; }
-.input-field input {
-    width: 100%;
-    padding: 8px 0;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    outline: none;
-    transition: 0.3s;
-}
-.input-field input:focus { border-bottom: 1px solid var(--cobre); }
+.input-field input { width: 100%; padding: 8px 0; border: none; border-bottom: 1px solid #ddd; outline: none; }
 
 .btn-login {
     background: var(--cafe);
@@ -100,55 +103,7 @@ h2 { text-align: center;
     border: none;
     border-radius: 6px;
     margin-top: 20px;
-    cursor: pointer;
 }
-
-/* Lado da Imagem */
-.image-container {
-    flex: 1.1;
-    background: var(--caramelo) url('../images/login-hero.png') no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    padding: 60px 40px 20px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-/* Botão da Seta */
-.arrow-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid white;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.arrow-button:hover { background: white; color: var(--caramelo); }
-
-/* Painel de Usuários (Pop-up interno) */
-.user-panel {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 80px;
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    overflow-y: auto;
-    transition: 0.4s ease;
-}
-.user-panel.hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
-
-/* Botão X para sair do Login */
 .close-login {
     position: absolute;
     top: 20px;
@@ -159,33 +114,126 @@ h2 { text-align: center;
     font-weight: bold;
     z-index: 10;
 }
-
-/* Painel de Usuários Estilizado */
-.user-panel {
+.arrow-button{
     position: absolute;
-    inset: 20px; /* Preenche quase tudo */
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
+        bottom: 20px;
+        right: 20px;
+        width: 44px;  /* Tamanho fixo para não esticar */
+        height: 44px; /* Tamanho fixo para não esticar */
+        background: var(--cafe); /* Cor sólida no mobile para destacar */
+        border: 1px solid white;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 100;
+        transition: 0.3s;
+}
+/* ── CONFIGURAÇÃO DESKTOP  ── */
+
+@media (min-width: 1280px) {
+    .login-card {
+        width: 1250px;
+        height: 760px;
+        min-height: auto;
+        flex-direction: row; 
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        position: relative;
+    }
+
+    .form-container { 
+        flex: 1; 
+        padding: 50px; 
+    }
+
+    .image-container {
+        display: flex; 
+        flex: 1.1;
+        background: var(--caramelo) url('../images/login-hero.png') no-repeat;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        padding: 60px 40px 20px 40px;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+.arrow-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;  /* Tamanho fixo para não esticar */
+    height: 44px; /* Tamanho fixo para não esticar */
+    background: var(--cafe); /* Cor sólida no mobile para destacar */
+    border: 1px solid white;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     z-index: 100;
-    transition: transform 0.5s ease;
+    transition: 0.3s;
 }
 
-.user-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    .user-panel {
+        position: absolute;
+        inset: 20px;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 100;
+        transition: transform 0.5s ease;
+    }
 }
+/* ── CONFIGURAÇÃO TABLET (Entre 768px e 1279px) ── */
+@media (min-width: 768px) and (max-width: 1279px) {
+.login-card {
+        max-width: 90%;
+        height: auto; 
+        min-height: 500px;
+        border-radius: 20px;
+    }
+    .image-container {
+        display: flex; /* Garante que a imagem apareça no tablet */
+        flex: 1;
+    }
+    .form-container {
+        padding: 40px;
+    }
 
-/* Estilo do Card individual (Baseado na sua referência) */
-.user-card {
-    background: var(--creme-fundo);
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    /* 5. DASHBOARD DE USUÁRIOS */
+    .dash-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .user-grid {
+        /* No tablet, força 2 colunas fixas para ficar organizado */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 20px;
+    }
+    .admin-user-card {
+        padding: 20px;
+    }
+    .arrow-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;  /* Tamanho fixo para não esticar */
+    height: 44px; /* Tamanho fixo para não esticar */
+    background: var(--cafe); /* Cor sólida no mobile para destacar */
+    border: 1px solid white;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+        
+    }
 }
-
-.user-card strong { color: var(--cafe); display: block; margin-top: 5px; }
-.user-card small { color: var(--cobre); }

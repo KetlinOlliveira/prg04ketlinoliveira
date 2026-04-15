@@ -1,52 +1,113 @@
-body { background-color: #FAF5EE; font-family: 'Inter', sans-serif; margin: 0; }
-        .dash-wrapper { padding: 40px; max-width: 1200px; margin: 0 auto; }
-        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .dash-header h1 { color: #3B1F10; font-size: 2rem; }
-        
-        .user-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 25px; 
-        }
 
-        /* Card identico à referência */
-        .admin-user-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            border: 1px solid transparent;
-        }
-        .admin-user-card:hover { transform: translateY(-5px); border-color: #D4956A; }
+body { 
+    background-color: #FAF5EE; 
+    font-family: 'Inter', sans-serif; 
+    margin: 0; 
+}
 
-        .avatar-circle {
-            width: 65px; height: 65px;
-            background: #A05535;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
+.dash-wrapper { 
+    padding: 24px 16px; /* Reduzido para não apertar no celular */
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
 
-        .user-info { flex-grow: 1; }
-        .user-info h3 { margin: 0; color: #3B1F10; font-size: 1.1rem; }
-        .user-info p { margin: 4px 0; color: #6B3520; font-size: 0.85rem; }
-        .user-info span { 
-            background: #F0DBC8; color: #A05535; 
-            padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; 
-        }
+.dash-header { 
+    display: flex; 
+    flex-direction: column; /* Título e botão um embaixo do outro no mobile */
+    gap: 16px;
+    align-items: flex-start; 
+    margin-bottom: 32px; 
+}
 
-        .action-menu { position: relative; }
-        .btn-action {
-            background: #FAF5EE; border: 1px solid #D4956A;
-            color: #3B1F10; padding: 8px 12px; border-radius: 8px;
-            cursor: pointer; font-size: 0.8rem; font-weight: 600;
-        }
+.dash-header h1 { 
+    color: #3B1F10; 
+    font-size: 1.5rem; /* Menor no mobile */
+}
+
+/* Grid configurado para ocupar toda a largura no mobile */
+.user-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; /* Uma única coluna por padrão */
+    gap: 16px; 
+}
+
+/* Card ajustado para mobile */
+.admin-user-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px; /* Mais compacto */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+    border: 1px solid transparent;
+}
+
+.avatar-circle {
+    width: 50px; 
+    height: 50px;
+    background: #A05535;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.user-info { flex-grow: 1; }
+.user-info h3 { margin: 0; color: #3B1F10; font-size: 1rem; }
+.user-info p { margin: 2px 0; color: #6B3520; font-size: 0.8rem; }
+.user-info span { 
+    background: #F0DBC8; color: #A05535; 
+    padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; 
+}
+
+.btn-action {
+    background: #FAF5EE; border: 1px solid #D4956A;
+    color: #3B1F10; padding: 6px 10px; border-radius: 8px;
+    cursor: pointer; font-size: 0.75rem; font-weight: 600;
+}
+.close-login {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: var(--cafe);
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+/* --- CONFIGURAÇÃO DESKTOP  --- */
+
+@media (min-width: 768px) {
+    .dash-wrapper { padding: 40px; }
+    
+    .dash-header { 
+        flex-direction: row;
+        justify-content: space-between; 
+        align-items: center;
+        margin-bottom: 40px; 
+    }
+    
+    .dash-header h1 { font-size: 2rem; }
+
+    .user-grid { 
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+        gap: 25px; 
+    }
+
+    .admin-user-card { padding: 24px; gap: 20px; }
+    .admin-user-card:hover { transform: translateY(-5px); border-color: #D4956A; }
+
+    .avatar-circle { width: 65px; height: 65px; font-size: 1.5rem; }
+    
+    .user-info h3 { font-size: 1.1rem; }
+    .user-info p { font-size: 0.85rem; }
+    
+    .btn-action { padding: 8px 12px; font-size: 0.8rem; }
+}

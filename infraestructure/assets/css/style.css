@@ -18,6 +18,7 @@
 html, body {
     height: 100%;
     overflow: hidden;
+    background-color: var(--creme);
 }
 
 /* ── SHELL ── */
@@ -26,7 +27,7 @@ html, body {
     position: relative;
 }
 
-/* ── TOPBAR ── */
+/* ── TOPBAR (Estilos base para Mobile) ── */
 .topbar {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -34,14 +35,13 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 32px;
+    padding: 0 16px;
     z-index: 100;
-    /* sem background — flutua sobre a imagem */
 }
 
 .topbar-brand-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--creme);
     letter-spacing: 0.02em;
@@ -52,59 +52,73 @@ html, body {
 .topbar-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     z-index: 101;
 }
 
 /* ── CHECKBOX ESCONDIDO ── */
-.menu-checkbox {
-    display: none;
-}
+.menu-checkbox { display: none; }
 
 /* ── BOTÃO ☰ ── */
 .btn-menu {
-    font-size: 22px;
+    font-size: 24px;
     color: var(--creme);
     cursor: pointer;
     user-select: none;
     line-height: 1;
     transition: opacity 0.2s;
+    margin-left: 4px;
 }
 .btn-menu:hover { opacity: 0.7; }
 
-/* ── BOTÃO ADOTAR ── */
-.btn-adotar , .btn-login {
+/* ── BOTÕES PADRÃO (Adotar, Login) ── */
+.btn-adotar, .btn-login, .btn-adotar-hero {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
     font-weight: 500;
     color: var(--creme);
-    background: var(--cafe);
     border: none;
     border-radius: 50px;
-    padding: 12px 28px;
     cursor: pointer;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: transform 0.28s, box-shadow 0.28s;
-    box-shadow: 0 8px 28px rgba(201,76,94,0.38);
+    text-align: center;
 }
 
-.btn-login{
-    background: var(--cobre);
-     box-shadow: 0 8px 28px rgba(160,85,53,0.38);
-    transition: transform 0.28s, box-shadow 0.28s;
-    box-shadow: 0 8px 28px rgba(201,76,94,0.38);
+.btn-adotar, .btn-login {
+    font-size: 11px;
+    padding: 10px 16px;
 }
-.btn-adotar:hover, .btn-login:hover {
+
+.btn-adotar-hero {
+    font-size: 14px;  /* Maior que os outros no mobile */
+    padding: 14px 32px;
+    background: var(--cafe);
+    box-shadow: 0 8px 24px rgba(59,31,16,0.3);
+}
+
+/* 3. Cores e Sombras específicas */
+.btn-login {
+    background: var(--cobre);
+    box-shadow: 0 8px 24px rgba(160,85,53,0.3);
+}
+
+.btn-adotar {
+    background: var(--cafe);
+    box-shadow: 0 8px 24px rgba(59,31,16,0.3);
+}
+
+/* 4. Efeitos de Hover */
+.btn-adotar:hover, .btn-login:hover, .btn-adotar-hero:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 38px rgba(201,76,94,0.5);
 }
 
 /* ── MENU DROPDOWN ── */
 .topbar-nav {
     position: fixed;
     top: 0; right: 0;
-    width: 260px;
+    width: 100%;
+    max-width: 280px;
     height: 100vh;
     background: rgba(59,31,16,0.97);
     backdrop-filter: blur(16px);
@@ -115,13 +129,10 @@ html, body {
     padding: 80px 40px 40px;
     gap: 8px;
     z-index: 200;
-
-    /* começa fora da tela */
     transform: translateX(100%);
     transition: transform 0.3s ease;
 }
 
-/* quando checkbox está marcado → menu desliza */
 .menu-checkbox:checked ~ .topbar-right ~ .topbar-nav,
 .menu-checkbox:checked ~ .topbar-nav {
     transform: translateX(0);
@@ -142,11 +153,10 @@ html, body {
     padding-left: 8px;
 }
 
-/* botão fechar ✕ dentro do menu */
 .menu-close {
     position: absolute;
     top: 20px; right: 28px;
-    font-size: 20px;
+    font-size: 24px;
     color: var(--caramelo);
     cursor: pointer;
     opacity: 0.7;
@@ -154,7 +164,6 @@ html, body {
 }
 .menu-close:hover { opacity: 1; }
 
-/* overlay escuro atrás do menu */
 .menu-checkbox:checked ~ .hero::before {
     opacity: 1;
     pointer-events: auto;
@@ -172,35 +181,30 @@ html, body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center bottom; /* Foca nos animais no mobile */
     display: block;
 }
 
-/* overlay escuro suave para o logo e botão ficarem legíveis */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(108, 62, 38, 0.45) 0%,
-        transparent 40%
-    );
+    background: linear-gradient(to bottom, rgba(108, 62, 38, 0.45) 0%, transparent 40%);
     pointer-events: none;
 }
 
 .hero-headline {
-   position: absolute;
-    top: 25%;
+    position: absolute;
+    top: 15%; /* Mais alto no mobile para não cobrir a arte */
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translateX(-50%);
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5.5vw, 72px);
+    font-size: clamp(32px, 8vw, 72px);
     font-weight: 700;
     color: var(--cafe);
     text-align: center;
     line-height: 1.15;
-    max-width: 800px;
     width: 90%;
+    max-width: 800px;
     z-index: 10;
 }
 
@@ -211,144 +215,80 @@ html, body {
 
 .hero-bottom {
     position: absolute;
-    bottom: 60px;
+    bottom: 40px; /* Distância do final da tela */
     left: 50%;
     transform: translateX(-50%);
+    width: 90%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column; 
+    align-items: center;  
+    gap: 20px;             
     z-index: 10;
-    padding: 16px 110px;
 }
 
 .btn-adotar-hero {
-    position: inherit;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--creme);
-    background: var(--cafe);
-    border: none;
-    border-radius: 50px;
-    padding: 16px 40px;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: transform 0.28s, box-shadow 0.28s;
-    box-shadow: 0 8px 28px rgba(59,31,16,0.38);
-    z-index: 101;
-}
-
-.btn-adotar-hero:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 38px rgba(59,31,16,0.5);
+    padding: 14px 32px;
+    font-size: 14px;
 }
 
 .hero-caption {
-    position: absolute;
-    bottom: 78px;      
+    position: static;   
+    transform: none;
+    bottom: 40px;      
     left: 50%;
     transform: translateX(-50%);
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 300;
     color: var(--cafe);
     text-align: center;
-    max-width: 480px;
     width: 90%;
+    max-width: 480px;
     opacity: 0.75;
     line-height: 1.6;
     z-index: 10;
 }
 
-/*responsividade  */
-/* ── TABLET + MOBILE ── */
-@media (max-width: 860px) {
-     .sidebar {
-    width: 100%;
-    height: 56px;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 0 16px;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-right: none;
-    border-top: 1px solid rgba(212, 149, 106, 0.14);
-  }
 
-
-    .sidebar-logo { 
-        display: none; 
+/* ── MEDIA QUERIES (DESKTOP) ── */
+@media (min-width: 768px) {
+    .topbar {
+        padding: 0 32px;
+    }
+    
+    .topbar-brand-name {
+        font-size: 24px;
     }
 
-    .sidebar-nav {
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-around;
+    .topbar-right {
+        gap: 16px;
     }
 
-    .sidebar-item { 
-        flex: 1; 
-        padding: 8px 4px; 
+    .btn-adotar, .btn-login {
+        font-size: 13px;
+        padding: 12px 28px;
     }
-    .sidebar-label { 
-        font-size: 10px;
-     }
-      .page-shell {
-    flex-direction: column;
-  }
 
-    .main-content {
-         margin-left: 0; 
-         width: 100%;
-         padding-bottom: 56px; 
-        }
+    .hero-bg {
+        object-position: center top;
+    }
 
-    .topbar { 
-        left: 0; 
+    .hero-headline {
+        top: 25%;
+        transform: translate(-50%, -60%);
     }
-    .topbar-nav { 
-        display: none; 
-    }
-    .hero { 
-        grid-template-columns: 1fr;
-     }
-    .hero-right { 
-        display: none; 
-    }
-}
 
-/* ── Mobile fino ── */
-@media (max-width: 540px) {
-  .topbar { 
-    padding: 0 20px;
- }
-  .hero-left {
-     padding: 48px 24px 40px; 
+    .hero-bottom {
+        bottom: 60px;
     }
-  .hero-title { 
-    font-size: clamp(40px, 10vw, 56px);
- }
- 
-    .hero-illustration{
-        display: none;
+
+    .btn-adotar-hero {
+        font-size: 15px;
+        padding: 16px 40px;
     }
-  .hero-stats { 
-    flex-wrap: wrap; 
-    gap: 20px; 
-    margin-top: 36px; 
-}
-  .hero-actions { 
-    flex-direction: column; 
-    align-items: flex-start;
-     gap: 14px; 
+
+    .hero-caption {
+        bottom: 78px;
+        font-size: 13px;
     }
-  .hero-dots {
-     display: none; 
-    }
-  .scroll-hint { 
-    display: none;
- }
 }
