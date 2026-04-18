@@ -1,65 +1,77 @@
-// Executa assim que a página termina de carregar
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     renderizarPainel();
 });
 
 function renderizarPainel() {
-    const grid = document.getElementById('grid-admin');
-    if (!grid) return;
+    const tbody = document.getElementById('grid-admin');
+    if (!tbody) return;
 
-    // LIMPA para evitar que os cards se multipliquem ao editar/excluir
-    grid.innerHTML = "";
+    tbody.innerHTML = "";
 
-    // Puxa a lista oficial do LocalStorage
     const listaFinal = JSON.parse(localStorage.getItem('usuarios')) || [];
 
     listaFinal.forEach((user, index) => {
-        const card = document.createElement('div');
-        card.className = "admin-user-card";
-        // Estilo baseado no seu design
-        card.style = "background: white; padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; margin-bottom: 15px;";
+        const tr = document.createElement('tr');
 
-        card.innerHTML = `
-            <div style="background: #A05535; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem; flex-shrink: 0;">
-                ${user.nome.charAt(0).toUpperCase()}
-            </div>
-            <div style="flex-grow: 1; text-align: left;">
-                <h3 style="margin: 0; color: #3B1F10;">${user.nome}</h3>
-                <p style="margin: 2px 0; color: #6B3520; font-size: 0.8rem;">${user.email}</p>
-                <span style="background: #F0DBC8; color: #A05535; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem;">ID: ${user.id}</span>
-            </div>
-            
-            <div class="dropdown-container" style="position: relative;">
-                <button onclick="abrirAcoes(${index})" style="background: #FAF5EE; border: 1px solid #D4956A; padding: 6px 12px; border-radius: 6px; cursor: pointer;">Ação ▾</button>
-                <div id="menu-${index}" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; min-width: 110px;">
-                    <button onclick="editarUser(${index})" style="width: 100%; padding: 10px; border: none; background: none; text-align: left; cursor: pointer; border-bottom: 1px solid #eee;">Editar</button>
-                    <button onclick="excluirUser(${index})" style="width: 100%; padding: 10px; border: none; background: none; text-align: left; cursor: pointer; color: #C94C5E;">Excluir</button>
+        tr.innerHTML = `
+            <td>
+                <div class="d-flex align-items-center gap-2">
+                    <div style="background: #A05535; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; flex-shrink: 0;">
+                        ${user.nome.charAt(0).toUpperCase()}
+                    </div>
+                    <strong style="color: #3B1F10;">${user.nome}</strong>
                 </div>
-            </div>
+            </td>
+            <td style="color: #6B3520;">${user.email}</td>
+            <td>
+                <span class="badge" style="background: #F0DBC8; color: #A05535;">ID: ${user.id}</span>
+            </td>
+            <td>
+                <span class="badge bg-success">Ativo</span>
+            </td>
+            <td>
+                <div class="dropdown">
+                    <button 
+                        class="btn btn-sm dropdown-toggle" 
+                        style="background: #FAF5EE; border: 1px solid #D4956A; color: #3B1F10;"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                        Ação
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <button class="dropdown-item" onclick="editarUser(${index})">
+                                ✏️ Editar
+                            </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <button class="dropdown-item text-danger" onclick="excluirUser(${index})">
+                                🗑️ Excluir
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </td>
         `;
-        grid.appendChild(card);
+
+        tbody.appendChild(tr);
     });
 }
 
-// Funções globais de suporte
-window.abrirAcoes = (index) => {
-    const menu = document.getElementById(`menu-${index}`);
-    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-};
-
 window.excluirUser = (index) => {
     let dados = JSON.parse(localStorage.getItem('usuarios'));
-    if(confirm("Deseja excluir?")) {
+    if (confirm("Deseja excluir?")) {
         dados.splice(index, 1);
         localStorage.setItem('usuarios', JSON.stringify(dados));
-        renderizarPainel(); // Redesenha a lista
+        renderizarPainel();
     }
 };
 
 window.editarUser = (index) => {
     let dados = JSON.parse(localStorage.getItem('usuarios'));
     const novo = prompt("Novo nome:", dados[index].nome);
-    if(novo) {
+    if (novo) {
         dados[index].nome = novo;
         localStorage.setItem('usuarios', JSON.stringify(dados));
         renderizarPainel();
