@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    min-height: 100vh;
+    background-color: var(--creme);
+    color: var(--texto);
+    font-family: "DM Sans", sans-serif;
+}
+
+button, 
+input,
+textarea,
+select{
+    font: inherit;
+}
+
+a {
+    text-decoration: none;
+}

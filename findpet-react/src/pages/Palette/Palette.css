@@ -1,0 +1,139 @@
+.palette-page {
+  background: var(--creme);
+  min-height: 100vh;
+}
+
+.palette-header {
+  background-color: var(--cafe);
+  padding: 48px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.close-palette {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: var(--creme);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.palette-header .eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--caramelo);
+  margin-bottom: 12px;
+}
+
+.palette-header h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(28px, 8vw, 52px);
+  font-weight: 700;
+  color: var(--creme);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.palette-header h1 span {
+  color: var(--caramelo);
+}
+
+.palette-header p {
+  font-size: 14px;
+  color: var(--pessego);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.psicologia-section {
+  background: var(--cafe);
+  padding: 56px 24px;
+}
+
+.psicologia-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.psicologia-section .section-label {
+  color: var(--caramelo);
+}
+
+.psicologia-section .section-title {
+  color: var(--creme);
+}
+
+.psy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.psy-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.psy-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dot-cafe {
+  background: var(--cafe);
+  border: 1px solid var(--caramelo);
+}
+
+.dot-rosa {
+  background: var(--rosa);
+}
+
+.dot-caramelo {
+  background: var(--caramelo);
+}
+
+.dot-ambar {
+  background: var(--ambar);
+}
+
+.dot-creme {
+  background: var(--creme);
+  border: 1px solid var(--caramelo);
+}
+
+.psy-text {
+  font-size: 13px;
+  color: var(--pessego);
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .palette-header {
+    padding: 64px 48px 56px;
+  }
+
+  .psicologia-section {
+    padding: 72px 48px;
+  }
+
+  .psy-row {
+    align-items: center;
+    padding: 14px 18px;
+  }
+
+  .psy-dot {
+    width: 28px;
+    height: 28px;
+  }
+}

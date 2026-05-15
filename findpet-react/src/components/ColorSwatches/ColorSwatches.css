@@ -1,0 +1,191 @@
+.swatches-section {
+  padding: 40px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cafe);
+  margin-bottom: 24px;
+}
+
+.swatches {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  gap: 4px;
+}
+
+.swatch {
+  flex: none;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px;
+  position: relative;
+}
+
+.swatch-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.swatch-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.swatch-hex {
+  font-size: 11px;
+  font-family: "Courier New", monospace;
+  opacity: 0.8;
+}
+
+.swatch-role {
+  display: none;
+}
+
+.sw-cafe {
+  background: var(--cafe);
+}
+
+.sw-mogno {
+  background: var(--mogno);
+}
+
+.sw-cobre {
+  background: var(--cobre);
+}
+
+.sw-caramelo {
+  background: var(--caramelo);
+}
+
+.sw-pessego {
+  background: var(--pessego);
+  border: 1px solid #e2c8b0;
+}
+
+.sw-rosa {
+  background: var(--rosa);
+}
+
+.sw-ambar {
+  background: var(--ambar);
+}
+
+.sw-creme {
+  background: var(--creme);
+  border: 1px solid #e2c8b0;
+}
+
+.sw-cafe .swatch-name,
+.sw-cafe .swatch-hex,
+.sw-cafe .swatch-role {
+  color: var(--caramelo);
+}
+
+.sw-mogno .swatch-name,
+.sw-mogno .swatch-hex,
+.sw-mogno .swatch-role {
+  color: #e8b48a;
+}
+
+.sw-cobre .swatch-name,
+.sw-cobre .swatch-hex,
+.sw-cobre .swatch-role {
+  color: var(--pessego);
+}
+
+.sw-caramelo .swatch-name,
+.sw-caramelo .swatch-hex,
+.sw-caramelo .swatch-role {
+  color: var(--cafe);
+}
+
+.sw-pessego .swatch-name,
+.sw-pessego .swatch-hex,
+.sw-pessego .swatch-role {
+  color: var(--mogno);
+}
+
+.sw-rosa .swatch-name,
+.sw-rosa .swatch-hex,
+.sw-rosa .swatch-role {
+  color: #fde8ec;
+}
+
+.sw-ambar .swatch-name,
+.sw-ambar .swatch-hex,
+.sw-ambar .swatch-role {
+  color: var(--cafe);
+}
+
+.sw-creme .swatch-name,
+.sw-creme .swatch-hex,
+.sw-creme .swatch-role {
+  color: var(--mogno);
+}
+
+@media (min-width: 768px) {
+  .swatches-section {
+    padding: 64px 48px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 36px;
+  }
+
+  .swatches {
+    flex-direction: row;
+    height: 220px;
+    gap: 3px;
+  }
+
+  .swatch {
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+    transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .swatch:hover {
+    flex: 3.5;
+  }
+
+  .swatch-info {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .swatch:hover .swatch-info {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .swatch-role {
+    display: block;
+    font-size: 11px;
+    margin-top: 6px;
+    opacity: 0.65;
+    white-space: nowrap;
+  }
+}

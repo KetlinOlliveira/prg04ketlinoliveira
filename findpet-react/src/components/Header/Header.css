@@ -1,0 +1,148 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 16px;
+  z-index: 100;
+}
+
+.topbar-brand-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--creme);
+  letter-spacing: 0.02em;
+}
+
+.topbar-brand-name span {
+  color: var(--cafe);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-login-header,
+.btn-adotar-header {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  color: var(--creme);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: transform 0.28s, box-shadow 0.28s;
+  text-align: center;
+  font-size: 11px;
+  padding: 10px 16px;
+}
+
+.btn-login-header {
+  background: var(--cobre);
+  box-shadow: 0 8px 24px rgba(160, 85, 53, 0.3);
+}
+
+.btn-adotar-header {
+  background: var(--cafe);
+  box-shadow: 0 8px 24px rgba(59, 31, 16, 0.3);
+}
+
+.btn-login-header:hover,
+.btn-adotar-header:hover {
+  transform: translateY(-2px);
+  color: var(--creme);
+}
+
+.btn-menu {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--creme);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.topbar-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  width: 100%;
+  max-width: 280px;
+  height: 100vh;
+
+  background: rgba(59, 31, 16, 0.97);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(212, 149, 106, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 80px 40px 40px;
+  z-index: 200;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.topbar-nav-open {
+  transform: translateX(0);
+}
+
+.topbar-nav a {
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--pessego);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(212, 149, 106, 0.12);
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+.topbar-nav a:hover {
+  color: var(--caramelo);
+  padding-left: 8px;
+}
+
+.menu-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--caramelo);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .topbar {
+    padding: 0 32px;
+  }
+
+  .topbar-brand-name {
+    font-size: 24px;
+  }
+
+  .topbar-right {
+    gap: 16px;
+  }
+
+  .btn-login-header,
+  .btn-adotar-header {
+    font-size: 13px;
+    padding: 12px 28px;
+  }
+}
