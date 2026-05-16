@@ -1,3 +1,4 @@
+/*   Configuração geral da página*/
 .admin-page {
   background-color: var(--creme);
   min-height: 100vh;
@@ -56,6 +57,8 @@
   font-size: 20px;
   font-weight: bold;
 }
+
+/*Responsividade*/
 
 @media (min-width: 768px) {
   .dash-wrapper {

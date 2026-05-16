@@ -1,3 +1,10 @@
+/*
+  Lista inicial de usuários fictícios.
+
+  Esses dados simulam um pequeno banco de dados inicial.
+  Caso o localStorage esteja vazio, esses usuários são carregados
+  automaticamente pelo userService.
+*/
 export const initialUsers = [
   { id: 1, nome: "Ketlin Oliveira", email: "ketlin@email.com", senha: "123" },
   { id: 2, nome: "Eduardo Satiro", email: "eduardo@email.com", senha: "123" },

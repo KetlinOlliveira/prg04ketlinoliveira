@@ -1,13 +1,16 @@
 import { getInitial } from "../../services/userService";
+
 import "./UserTable.css";
 
+/*
+  Componente responsável por exibir a tabela de usuários.
+
+  Ele recebe os usuários e as funções de editar/excluir por props,
+  mantendo a tabela reutilizável e sem depender diretamente do localStorage.
+*/
 function UserTable({ users, onEditUser, onDeleteUser }) {
   if (users.length === 0) {
-    return (
-      <div className="empty-users">
-        Nenhum usuário cadastrado.
-      </div>
-    );
+    return <div className="empty-users">Nenhum usuário cadastrado.</div>;
   }
 
   return (
@@ -24,6 +27,10 @@ function UserTable({ users, onEditUser, onDeleteUser }) {
         </thead>
 
         <tbody>
+          {/*
+            O map transforma cada usuário em uma linha da tabela.
+            A propriedade key ajuda o React a identificar cada item da lista.
+          */}
           {users.map((user) => (
             <tr key={user.id}>
               <td>
@@ -39,15 +46,11 @@ function UserTable({ users, onEditUser, onDeleteUser }) {
               <td className="user-email">{user.email}</td>
 
               <td>
-                <span className="badge user-id-badge">
-                  ID: {user.id}
-                </span>
+                <span className="badge user-id-badge">ID: {user.id}</span>
               </td>
 
               <td>
-                <span className="badge bg-success">
-                  Ativo
-                </span>
+                <span className="badge bg-success">Ativo</span>
               </td>
 
               <td>

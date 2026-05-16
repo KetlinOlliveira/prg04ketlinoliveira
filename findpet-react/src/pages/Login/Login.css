@@ -1,3 +1,4 @@
+/*   Configuração geral da página*/
 .login-page {
   background-color: #ffefe4;
   display: flex;
@@ -48,6 +49,8 @@
   color: white;
   transform: translateX(4px);
 }
+
+/*Responsividade*/
 
 @media (min-width: 768px) and (max-width: 1279px) {
   .login-card {

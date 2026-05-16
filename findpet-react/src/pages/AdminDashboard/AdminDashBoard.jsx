@@ -1,21 +1,38 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import UserTable from "../../components/UserTable/UserTable";
 import {
   getUsers,
   updateUserName,
   deleteUser
 } from "../../services/userService";
+
 import "./AdminDashboard.css";
 
+/*
+  Página do painel administrativo.
+
+  Ela carrega os usuários salvos no localStorage e permite editar
+  ou excluir usuários da lista.
+*/
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
 
+  /*
+    useEffect executa quando o componente é carregado.
+    Aqui ele busca os usuários salvos e coloca no estado.
+  */
   useEffect(() => {
     const storedUsers = getUsers();
     setUsers(storedUsers);
   }, []);
 
+  /*
+    Edita o nome de um usuário.
+    Após salvar no localStorage, o estado é atualizado para refletir
+    a mudança imediatamente na tabela.
+  */
   function handleEditUser(user) {
     const newName = window.prompt("Novo nome:", user.nome);
 
@@ -27,6 +44,10 @@ function AdminDashboard() {
     setUsers(updatedUsers);
   }
 
+  /*
+    Exclui um usuário após confirmação.
+    O estado é atualizado com a nova lista retornada pelo service.
+  */
   function handleDeleteUser(userId) {
     const shouldDelete = window.confirm("Deseja excluir este usuário?");
 

@@ -1,3 +1,5 @@
+/*   Configuração geral da página*/
+
 .topbar {
   position: fixed;
   top: 0;
@@ -126,6 +128,8 @@
   color: var(--caramelo);
   cursor: pointer;
 }
+
+/*Responsividade*/
 
 @media (min-width: 768px) {
   .topbar {

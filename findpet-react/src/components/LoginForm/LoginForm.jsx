@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+
 import { createUser } from "../../services/userService";
 import patinhaIcon from "../../assets/icons/patinha.ico";
+
 import "./LoginForm.css";
 
+/*
+  Componente responsável pelo formulário de login fictício.
+
+  Ele usa useState para controlar os campos digitados pelo usuário
+  e useNavigate para redirecionar para o painel administrativo
+  após o cadastro.
+*/
 function LoginForm() {
   const navigate = useNavigate();
 
+  /*
+    Estado que armazena os valores dos campos do formulário.
+    Em React, os inputs são controlados pelo estado.
+  */
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -16,6 +29,10 @@ function LoginForm() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  /*
+    Atualiza o estado sempre que o usuário digita em algum campo.
+    A mesma função serve para input de texto, email, senha e checkbox.
+  */
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
 
@@ -25,6 +42,12 @@ function LoginForm() {
     }));
   }
 
+  /*
+    Valida o formulário e cria um novo usuário fictício.
+
+    Se algum campo estiver vazio, exibe uma mensagem de erro.
+    Caso esteja tudo preenchido, salva o usuário e redireciona para /admin.
+  */
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -54,6 +77,7 @@ function LoginForm() {
 
       <div className="brand">
         <img src={patinhaIcon} alt="Logo FindPet" />
+
         <div className="nome-logo">
           Find<span>Pet</span>
         </div>
@@ -79,6 +103,7 @@ function LoginForm() {
           <label htmlFor="nome" className="form-label">
             Usuário
           </label>
+
           <input
             type="text"
             id="nome"
@@ -94,6 +119,7 @@ function LoginForm() {
           <label htmlFor="email" className="form-label">
             Email
           </label>
+
           <input
             type="email"
             id="email"
@@ -109,6 +135,7 @@ function LoginForm() {
           <label htmlFor="senha" className="form-label">
             Senha
           </label>
+
           <input
             type="password"
             id="senha"

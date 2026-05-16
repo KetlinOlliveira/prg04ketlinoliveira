@@ -1,3 +1,4 @@
+/*   Configuração geral da página*/
 .contact-page {
   min-height: 100vh;
   background: var(--creme);
@@ -57,6 +58,8 @@
   height: 320px;
   object-fit: cover;
 }
+
+/*Responsividade*/
 
 @media (min-width: 768px) {
   .contact-card {

@@ -1,3 +1,5 @@
+/*   Configuração geral da página*/
+
 .palette-page {
   background: var(--creme);
   min-height: 100vh;
@@ -118,6 +120,7 @@
   line-height: 1.5;
 }
 
+/* Responsividade */
 @media (min-width: 768px) {
   .palette-header {
     padding: 64px 48px 56px;

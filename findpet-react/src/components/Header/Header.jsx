@@ -1,46 +1,78 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import "./Header.css";
 
-function Header(){
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+/*
+  Header principal do sistema.
 
-    function toggleMenu(){
-        setIsMenuOpen((currentState) => !currentState);
-    }
+  Ele contém o nome do projeto, botões de ação e menu de navegação.
+  O menu mobile é controlado com useState.
+*/
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    function closeMenu(){
-        setIsMenuOpen(false);
-    }
+  function toggleMenu() {
+    setIsMenuOpen((currentState) => !currentState);
+  }
 
-    return(
-        <header className="topbar">
-            <Link to ="/" className="logo">
-            Find<span>Pet</span></Link>
+  function closeMenu() {
+    setIsMenuOpen(false);
+  }
 
-            <div className="topbar-right">
-                <Link to= "/login" className="btn-login-header">Entrar</Link>
-                <Link to= "/contact" className="btn-contact-header">Adotar um amigo</Link>
-                <button className="btn-menu" onClick={toggleMenu} aria-label="Abrir menu">
-                ☰
-                </button>
-           </div>
+  return (
+    <header className="topbar">
+      <Link to="/" className="topbar-brand-name">
+        Find<span>Pet</span>
+      </Link>
 
-        <nav className = {`topbar-nav ${isMenuOpen ? "topbar-nav-open": ""}`}>
-          <button type="button"
+      <div className="topbar-right">
+        <Link to="/login" className="btn-login-header">
+          Entrar
+        </Link>
+
+        <Link to="/contato" className="btn-adotar-header">
+          Adotar um amigo
+        </Link>
+
+        <button
+          type="button"
+          className="btn-menu"
+          onClick={toggleMenu}
+          aria-label="Abrir menu"
+        >
+          ☰
+        </button>
+      </div>
+
+      <nav className={`topbar-nav ${isMenuOpen ? "topbar-nav-open" : ""}`}>
+        <button
+          type="button"
           className="menu-close"
           onClick={closeMenu}
-          aria-label= "fechar menu">
-            X
-        </button> 
+          aria-label="Fechar menu"
+        >
+          ✕
+        </button>
 
-        <Link to="/" onClick={closeMenu}> Início</Link>
-        <Link to="/palheta" onClick={closeMenu}>Palheta</Link>
-        <Link to="/contato" onClick={closeMenu}>Contato</Link>
-        <Link to="/login" onClick={closeMenu}>Login</Link>
-        </nav>
-        </header>
-    );
+        <Link to="/" onClick={closeMenu}>
+          Início
+        </Link>
+
+        <Link to="/palheta" onClick={closeMenu}>
+          Palheta
+        </Link>
+
+        <Link to="/contato" onClick={closeMenu}>
+          Contato
+        </Link>
+
+        <Link to="/login" onClick={closeMenu}>
+          Login
+        </Link>
+      </nav>
+    </header>
+  );
 }
 
-    export default Header;
+export default Header;
