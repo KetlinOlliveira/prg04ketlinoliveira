@@ -1,0 +1,201 @@
+.pet-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(59, 31, 16, 0.55);
+  backdrop-filter: blur(2px);
+  animation: pet-modal-fade 0.2s ease;
+}
+
+.pet-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background-color: var(--creme);
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(59, 31, 16, 0.3);
+  animation: pet-modal-pop 0.25s ease;
+}
+
+.pet-modal__close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--cafe);
+  background-color: rgba(250, 245, 238, 0.92);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 31, 16, 0.18);
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.pet-modal__close:hover {
+  transform: scale(1.08);
+  background-color: #ffffff;
+}
+
+.pet-modal__close:focus-visible {
+  outline: 3px solid var(--caramelo);
+  outline-offset: 2px;
+}
+
+.pet-modal__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: var(--pessego);
+  border-radius: 28px 28px 0 0;
+  overflow: hidden;
+}
+
+.pet-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-modal__placeholder {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--cobre);
+}
+
+.pet-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.pet-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pet-modal__name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cafe);
+}
+
+.pet-modal__breed {
+  font-size: 0.95rem;
+  color: var(--magno);
+}
+
+.pet-modal__distance {
+  flex-shrink: 0;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--creme);
+  background-color: var(--cobre);
+  border-radius: 999px;
+}
+
+.pet-modal__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  list-style: none;
+}
+
+.pet-modal__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.7rem 0.5rem;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(59, 31, 16, 0.06);
+}
+
+.pet-modal__fact-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--caramelo);
+}
+
+.pet-modal__fact-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cafe);
+}
+
+.pet-modal__description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--magno);
+}
+
+.pet-modal__actions {
+  margin-top: 0.2rem;
+}
+
+.pet-modal__adopt {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--creme);
+  background-color: var(--cobre);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.18s ease;
+}
+
+.pet-modal__adopt:hover {
+  background-color: var(--magno);
+  transform: translateY(-2px);
+}
+
+.pet-modal__adopt:focus-visible {
+  outline: 3px solid var(--caramelo);
+  outline-offset: 2px;
+}
+
+@keyframes pet-modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pet-modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
