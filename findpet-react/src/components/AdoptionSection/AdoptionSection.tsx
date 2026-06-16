@@ -23,8 +23,13 @@ function AdoptionSection() {
     <section className="adoption-section" id="adotar">
       <div className="adoption-section__inner">
         <header className="adoption-section__intro">
-          <span className="adoption-section__eyebrow">Encontre seu novo amigo</span>
-          <h2 className="adoption-section__title">Pets esperando por um lar</h2>
+          <span className="adoption-section__eyebrow">
+            <span className="adoption-section__eyebrow-dot" aria-hidden="true" />
+            Encontre seu novo amigo
+          </span>
+          <h2 className="adoption-section__title">
+            Pets esperando por um <em>lar</em>
+          </h2>
           <p className="adoption-section__subtitle">
             Escolha uma categoria e conheça os bichinhos prontos para receber
             todo o seu carinho.
