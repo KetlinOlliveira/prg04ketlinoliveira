@@ -1,0 +1,181 @@
+/*
+  Estilos da tela inicial do quiz.
+
+  A paleta usa o verde musgo e o amarelo alaranjado da ilustração do gato,
+  combinados com algumas cores da identidade original do FindPet.
+  O layout é pensado mobile-first e ganha ajustes no desktop via media query.
+*/
+
+.quiz-start {
+  /* Paleta local do quiz */
+  --musgo: #6f7355;
+  --musgo-escuro: #5b5f44;
+  --laranja: #e8973c;
+  --laranja-claro: #f3b15f;
+
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: var(--musgo);
+  color: var(--creme);
+  overflow: hidden;
+}
+
+/* Botão de fechar (X) no canto superior esquerdo */
+.quiz-close {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 10;
+
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  color: var(--creme);
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: background 0.25s, transform 0.25s;
+}
+
+.quiz-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.05);
+}
+
+/* Bloco de texto + botão */
+.quiz-start-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 88px 28px 24px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.quiz-start-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--laranja-claro);
+  margin-bottom: 16px;
+}
+
+.quiz-start-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-wrap: balance;
+  margin-bottom: 16px;
+}
+
+.quiz-start-text {
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(250, 245, 238, 0.88);
+  max-width: 420px;
+  margin-bottom: 28px;
+}
+
+.quiz-start-button {
+  display: inline-block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cafe);
+
+  background: var(--ambar);
+  padding: 16px 44px;
+  border-radius: 50px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+
+  transition: transform 0.28s, box-shadow 0.28s, background 0.28s;
+}
+
+.quiz-start-button:hover {
+  transform: translateY(-2px);
+  background: var(--laranja-claro);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Ilustração do gato na parte de baixo */
+.quiz-start-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.quiz-start-image {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Responsividade: ajustes para telas maiores (desktop) */
+@media (min-width: 768px) {
+  .quiz-start {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 48px;
+  }
+
+  .quiz-close {
+    top: 28px;
+    left: 28px;
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+  }
+
+  .quiz-start-content {
+    align-items: flex-start;
+    text-align: left;
+    padding: 0;
+    flex: 1;
+    max-width: 480px;
+  }
+
+  .quiz-start-title {
+    font-size: 48px;
+  }
+
+  .quiz-start-text {
+    font-size: 17px;
+  }
+
+  .quiz-start-image-wrapper {
+    flex: 1;
+    margin-top: 0;
+    justify-content: center;
+  }
+
+  .quiz-start-image {
+    max-width: 480px;
+  }
+}
