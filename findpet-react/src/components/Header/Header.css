@@ -34,7 +34,8 @@
 }
 
 .btn-login-header,
-.btn-adotar-header {
+.btn-adotar-header,
+.btn-conta-header {
   font-family: "DM Sans", sans-serif;
   font-weight: 500;
   color: var(--creme);
@@ -54,13 +55,35 @@
   box-shadow: 0 8px 24px rgba(160, 85, 53, 0.3);
 }
 
+.btn-conta-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cobre);
+  box-shadow: 0 8px 24px rgba(160, 85, 53, 0.3);
+}
+
+.btn-conta-header__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--creme);
+  color: var(--cobre);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .btn-adotar-header {
   background: var(--cafe);
   box-shadow: 0 8px 24px rgba(59, 31, 16, 0.3);
 }
 
 .btn-login-header:hover,
-.btn-adotar-header:hover {
+.btn-adotar-header:hover,
+.btn-conta-header:hover {
   transform: translateY(-2px);
   color: var(--creme);
 }

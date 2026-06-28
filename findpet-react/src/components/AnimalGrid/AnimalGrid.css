@@ -1,0 +1,36 @@
+.animal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+}
+
+@media (min-width: 600px) {
+  .animal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .animal-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .animal-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.animal-grid__message {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--magno);
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.animal-grid__message--error {
+  color: var(--rosa);
+}

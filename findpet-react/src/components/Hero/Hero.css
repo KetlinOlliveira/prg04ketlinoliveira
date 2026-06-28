@@ -30,7 +30,7 @@
   left: 50%;
   transform: translateX(-50%);
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fredoka", serif;
   font-size: clamp(32px, 8vw, 72px);
   font-weight: 700;
   color: var(--cafe);

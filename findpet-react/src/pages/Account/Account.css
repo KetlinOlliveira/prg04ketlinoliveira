@@ -1,0 +1,413 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+/* =========================
+   Página geral
+========================= */
+
+.account-page {
+  min-height: 100vh;
+  background: var(--creme);
+  padding: 1rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.account-page button,
+.account-page input,
+.account-page textarea,
+.account-page select {
+  font-family: "Poppins", sans-serif;
+}
+
+.account-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* =========================
+   Sidebar / Menu lateral
+========================= */
+
+.account-sidebar {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 28px rgba(59, 31, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+.account-sidebar__profile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  border-bottom: 1px solid rgba(59, 31, 16, 0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.account-sidebar__profile strong {
+  display: block;
+  color: var(--cafe);
+  font-size: 1rem;
+}
+
+.account-sidebar__profile span {
+  display: block;
+  color: var(--magno);
+  font-size: 0.85rem;
+}
+
+.account-menu {
+  width: 100%;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.account-menu a,
+.account-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 16px;
+  color: var(--cafe);
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.account-menu a:hover,
+.account-menu button:hover {
+  background: var(--pessego);
+  color: var(--cobre);
+}
+
+/* =========================
+   Avatar
+========================= */
+
+.account-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--cobre);
+  color: var(--creme);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.account-avatar--large {
+  width: 86px;
+  height: 86px;
+  font-size: 2.2rem;
+}
+
+/* =========================
+   Conteúdo principal
+========================= */
+
+.account-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account-header,
+.account-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 1.4rem;
+  box-shadow: 0 10px 28px rgba(59, 31, 16, 0.08);
+}
+
+.account-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-bottom: 1rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: var(--pessego);
+  color: var(--cobre);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.account-back-button:hover {
+  background: var(--cobre);
+  color: var(--creme);
+  transform: translateX(-3px);
+}
+
+.account-eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.5rem;
+  color: var(--cobre);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.account-header h1 {
+  color: var(--cafe);
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.account-header p,
+.account-muted {
+  color: var(--magno);
+  line-height: 1.6;
+}
+
+.account-muted {
+  margin-top: 0.5rem;
+}
+
+.account-card h2 {
+  color: var(--cafe);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+/* =========================
+   Card de perfil
+========================= */
+
+.account-profile-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.account-profile-top h2 {
+  color: var(--cafe);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.account-profile-top p {
+  color: var(--magno);
+  margin: 0.2rem 0 0.5rem;
+}
+
+.account-status {
+  display: inline-flex;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: var(--pessego);
+  color: var(--cobre);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* =========================
+   Cabeçalho dos cards
+========================= */
+
+.account-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.account-card__header--row {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* =========================
+   Endereço
+========================= */
+
+.account-address-action {
+  border: none;
+  border-radius: 999px;
+  background: var(--cobre);
+  color: var(--creme);
+  padding: 0.8rem 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(160, 85, 53, 0.18);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.account-address-action:hover {
+  background: var(--magno);
+  transform: translateY(-2px);
+}
+
+.account-address-card {
+  background: linear-gradient(135deg, #fffaf5 0%, var(--creme) 100%);
+  border: 1px solid rgba(59, 31, 16, 0.1);
+  border-radius: 26px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(59, 31, 16, 0.06);
+}
+
+.account-address-card__top {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(59, 31, 16, 0.1);
+  margin-bottom: 1rem;
+}
+
+.account-address-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  background: var(--pessego);
+  color: var(--cobre);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.account-address-card__label {
+  display: inline-flex;
+  margin-bottom: 0.25rem;
+  color: var(--cobre);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.account-address-card h3 {
+  color: var(--cafe);
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.account-address-card p {
+  color: var(--magno);
+  line-height: 1.5;
+}
+
+.account-address-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.account-address-detail {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(59, 31, 16, 0.08);
+}
+
+.account-address-detail span {
+  display: block;
+  color: var(--caramelo);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.account-address-detail strong {
+  color: var(--cafe);
+  font-size: 0.98rem;
+  word-break: break-word;
+}
+
+.account-address-empty {
+  border: 1px dashed rgba(160, 85, 53, 0.35);
+  border-radius: 24px;
+  padding: 1.4rem;
+  background: var(--creme);
+  text-align: center;
+}
+
+.account-address-empty__icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 0.8rem;
+  border-radius: 20px;
+  background: var(--pessego);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.account-address-empty h3 {
+  color: var(--cafe);
+  margin-bottom: 0.4rem;
+}
+
+.account-address-empty p {
+  color: var(--magno);
+  line-height: 1.6;
+}
+
+/* =========================
+   Responsividade
+========================= */
+
+@media (min-width: 700px) {
+  .account-card__header--row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .account-address-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .account-address-detail--full {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .account-page {
+    padding: 2rem;
+  }
+
+  .account-shell {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+  }
+
+  .account-sidebar {
+    position: sticky;
+    top: 1rem;
+    min-height: calc(100vh - 4rem);
+  }
+
+  .account-sidebar__profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

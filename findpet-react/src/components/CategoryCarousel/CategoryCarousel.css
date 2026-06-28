@@ -1,0 +1,122 @@
+.category-carousel {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.category-carousel__track {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.25rem 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cobre) var(--pessego);
+}
+
+.category-carousel__track::-webkit-scrollbar {
+ height: 8px;
+}
+
+
+.category-carousel__track::-webkit-scrollbar-track {
+  background-color: var(--pessego);
+  border-radius: 999px;
+}
+
+.category-carousel__track::-webkit-scrollbar-thumb {
+  background-color: var(--cobre);
+  border-radius: 999px;
+}
+
+.category-carousel__track li {
+  flex: 0 0 auto;
+}
+
+
+.category-item {
+  scroll-snap-align: start;
+  display: flex;
+  flex: 0 0 132px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 205px;
+  padding: 1.6rem 1rem;
+  background-color: var(--creme);
+  border: 2px solid transparent;
+  border-radius: 26px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(59, 31, 16, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.category-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(59, 31, 16, 0.12);
+}
+
+.category-item:focus-visible {
+  outline: 3px solid var(--caramelo);
+  outline-offset: 2px;
+}
+
+.category-item--active {
+  background-color: var(--cobre);
+  border-color: var(--cobre);
+}
+
+.category-item__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  
+  background-color: var(--creme);
+  overflow: hidden;
+}
+
+.category-item--active .category-item__icon-wrap {
+  background-color: var(--creme);
+}
+
+.category-item__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-item__placeholder {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cobre);
+}
+
+.category-item__label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cafe);
+}
+
+.category-item--active .category-item__label {
+  color: var(--creme);
+}
+
+@media (min-width: 768px) {
+  .category-carousel__track {
+    gap: 2.25rem;
+  }
+
+  .category-item {
+    flex-basis: 150px;
+    width: 230px;
+    height: 300px;
+    
+  }
+
+}

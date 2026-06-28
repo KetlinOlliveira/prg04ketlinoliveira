@@ -2,9 +2,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Palette from "./pages/Palette/Palette";
 import Contact from "./pages/Contact/Contact";
+import Account from "./pages/Account/Account";
+
+import QuizStart from "./pages/Quiz/QuizStart";
+import QuizQuestion from "./pages/Quiz/QuizQuestion";
+
+
 
 /*
   App é o componente principal da aplicação.
@@ -23,14 +28,18 @@ function App() {
         {/* Tela de login fictício */}
         <Route path="/login" element={<Login />} />
 
-        {/* Painel administrativo de usuários */}
-        <Route path="/admin" element={<AdminDashboard />} />
-
         {/* Página com a identidade visual e palheta de cores */}
         <Route path="/palheta" element={<Palette />} />
 
         {/* Página de contato */}
         <Route path="/contato" element={<Contact />} />
+
+        {/* Página de conta do usuário */}
+        <Route path="/conta" element={<Account />} />
+
+        <Route path="/quiz" element={<QuizStart />} />
+        
+        <Route path="/quiz/pergunta/:numero" element={<QuizQuestion />} />
       </Routes>
     </BrowserRouter>
   );
