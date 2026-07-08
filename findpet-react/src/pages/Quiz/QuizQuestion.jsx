@@ -1,56 +1,71 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./QuizQuestion.css";
+import { perguntas } from "../../data/quizQuestions";
+import { calcularResultado } from "../../utils/quizScoring";
+import {
+  getRespostas,
+  salvarResposta,
+  salvarResultado,
+} from "../../services/quizStorage";
 
 /*
   QuizQuestion é a tela de uma pergunta do quiz.
 
-  Esta é a PRIMEIRA pergunta (modelo). As próximas páginas podem ser
-  criadas com base nesta, trocando o texto da pergunta, as opções e
-  o número do progresso (perguntaAtual / totalPerguntas).
-
-  As opções ficam em um array para ficar fácil de editar e reaproveitar.
+  A pergunta e as opções exibidas dependem do número na URL
+  (/quiz/pergunta/:numero), buscado em data/quizQuestions.js. Cada resposta
+  é salva no localStorage (services/quizStorage.js) para que, ao chegar na
+  última pergunta, o resultado seja calculado com base em todas as respostas.
 */
-
-// Edite estes valores para montar a sua pergunta:
-const perguntaAtual = 1;
-const totalPerguntas = 5;
-
-const pergunta = "Quanto tempo livre você tem no seu dia a dia?";
-
-const opcoes = [
-  {
-    id: "muito",
-    icone: "🌞",
-    titulo: "Bastante tempo",
-    descricao: "Tenho a manhã ou a tarde livres para passeios e brincadeiras.",
-  },
-  {
-    id: "medio",
-    icone: "⏰",
-    titulo: "Um tempinho",
-    descricao: "Consigo algumas horas por dia para cuidar de um amigo.",
-  },
-  {
-    id: "pouco",
-    icone: "🌙",
-    titulo: "Pouco tempo",
-    descricao: "Minha rotina é corrida e fico fora boa parte do dia.",
-  },
-];
-
 function QuizQuestion() {
+  const { numero } = useParams();
   const navigate = useNavigate();
-  const [opcaoSelecionada, setOpcaoSelecionada] = useState(null);
 
-  const progresso = (perguntaAtual / totalPerguntas) * 100;
+  const numeroAtual = Number(numero);
+  const totalPerguntas = perguntas.length;
+  const pergunta = perguntas.find((p) => p.numero === numeroAtual);
+
+  const [opcaoSelecionada, setOpcaoSelecionada] = useState(
+    () => getRespostas()[numeroAtual] || null
+  );
+
+  useEffect(() => {
+    if (!pergunta) {
+      navigate("/quiz", { replace: true });
+      return;
+    }
+
+    setOpcaoSelecionada(getRespostas()[numeroAtual] || null);
+  }, [numeroAtual, pergunta, navigate]);
+
+  if (!pergunta) {
+    return null;
+  }
+
+  const progresso = (numeroAtual / totalPerguntas) * 100;
 
   function voltar() {
     navigate(-1);
   }
 
+  function cancelar() {
+    navigate("/");
+  }
+
   function selecionarOpcao(id) {
     setOpcaoSelecionada(id);
+    salvarResposta(numeroAtual, id);
+  }
+
+  function continuar() {
+    if (numeroAtual < totalPerguntas) {
+      navigate(`/quiz/pergunta/${numeroAtual + 1}`);
+      return;
+    }
+
+    const resultado = calcularResultado(getRespostas(), perguntas);
+    salvarResultado(resultado);
+    navigate("/quiz/resultado");
   }
 
   return (
@@ -85,15 +100,36 @@ function QuizQuestion() {
             ></div>
           </div>
           <span className="quiz-progress-label">
-            {perguntaAtual}/{totalPerguntas}
+            {numeroAtual}/{totalPerguntas}
           </span>
         </div>
+
+        <button
+          type="button"
+          className="quiz-cancel"
+          onClick={cancelar}
+          aria-label="Cancelar quiz e voltar para a tela inicial"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
       </header>
 
-      <h1 className="quiz-question-title">{pergunta}</h1>
+      <h1 className="quiz-question-title">{pergunta.pergunta}</h1>
 
       <ul className="quiz-options">
-        {opcoes.map((opcao) => (
+        {pergunta.opcoes.map((opcao) => (
           <li key={opcao.id}>
             <button
               type="button"
@@ -118,7 +154,7 @@ function QuizQuestion() {
         type="button"
         className="quiz-next"
         disabled={!opcaoSelecionada}
-        onClick={() => navigate(`/quiz/pergunta/${perguntaAtual + 1}`)}
+        onClick={continuar}
       >
         Continuar
       </button>
