@@ -6,7 +6,7 @@ import "./QuizStart.css";
   QuizStart é a primeira tela do quiz "Qual pet é ideal para você?".
 
   Ela mostra uma mensagem de boas-vindas, um botão para iniciar o quiz
-  e a ilustração do gatinho na parte de baixo. No canto superior esquerdo
+  e a ilustração dos pets na parte de baixo. No canto superior esquerdo
   há um botão de "X" que leva o usuário de volta para a tela inicial.
 */
 function QuizStart() {
@@ -61,7 +61,7 @@ function QuizStart() {
         <img
           className="quiz-start-image"
           src={quizGato}
-          alt="Ilustração de um gato laranja tranquilo"
+          alt="Ilustração de um cão branco, um cão marrom e um gato preto com corações ao redor"
         />
       </div>
     </main>
