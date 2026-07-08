@@ -8,6 +8,7 @@ import Account from "./pages/Account/Account";
 
 import QuizStart from "./pages/Quiz/QuizStart";
 import QuizQuestion from "./pages/Quiz/QuizQuestion";
+import QuizResult from "./pages/Quiz/QuizResult";
 
 
 
@@ -40,6 +41,8 @@ function App() {
         <Route path="/quiz" element={<QuizStart />} />
         
         <Route path="/quiz/pergunta/:numero" element={<QuizQuestion />} />
+
+        <Route path="/quiz/resultado" element={<QuizResult />} />
       </Routes>
     </BrowserRouter>
   );

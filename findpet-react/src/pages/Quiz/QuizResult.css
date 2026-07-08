@@ -1,0 +1,191 @@
+/*
+  Estilos da tela de resultado do quiz.
+
+  Segue a mesma paleta e linguagem visual das demais telas do quiz
+  (musgo de fundo, cartões creme, botão âmbar), mobile-first com ajustes
+  no desktop via media query.
+*/
+
+.quiz-result {
+  /* Paleta local do quiz */
+  --musgo: #6f7355;
+  --laranja: #e8973c;
+  --laranja-claro: #f3b15f;
+  --cartao: #faf5ee;
+
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  background-color: var(--musgo);
+  color: var(--creme);
+  padding: 88px 22px 40px;
+}
+
+/* Botão de fechar (X) no canto superior esquerdo */
+.quiz-result-close {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 10;
+
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--creme);
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: background 0.25s, transform 0.25s;
+}
+
+.quiz-result-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.05);
+}
+
+.quiz-result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  width: 100%;
+  max-width: 560px;
+}
+
+.quiz-result-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--laranja-claro);
+  margin-bottom: 16px;
+}
+
+/* Nome do animal em evidência */
+.quiz-result-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-wrap: balance;
+  margin-bottom: 18px;
+}
+
+.quiz-result-description {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(250, 245, 238, 0.9);
+  max-width: 480px;
+  margin-bottom: 28px;
+}
+
+/* Avisos / cuidados importantes */
+.quiz-result-avisos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.quiz-result-avisos li {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--cafe);
+
+  background: var(--cartao);
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+/* Alerta da trava de responsabilidade */
+.quiz-result-alert {
+  width: 100%;
+  background: rgba(232, 151, 60, 0.18);
+  border: 1px solid var(--laranja);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 28px;
+}
+
+.quiz-result-alert p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--creme);
+}
+
+/* Imagem do animal, centralizada e de tamanho médio */
+.quiz-result-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.quiz-result-image {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Botão ir adotar */
+.quiz-result-button {
+  display: inline-block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cafe);
+
+  background: var(--ambar);
+  padding: 16px 44px;
+  border-radius: 50px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+
+  transition: transform 0.28s, box-shadow 0.28s, background 0.28s;
+}
+
+.quiz-result-button:hover {
+  transform: translateY(-2px);
+  background: var(--laranja-claro);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsividade: ajustes para telas maiores (desktop) */
+@media (min-width: 768px) {
+  .quiz-result {
+    padding: 64px 48px;
+  }
+
+  .quiz-result-title {
+    font-size: 52px;
+  }
+
+  .quiz-result-description {
+    font-size: 17px;
+  }
+
+  .quiz-result-image {
+    max-width: 300px;
+  }
+}
