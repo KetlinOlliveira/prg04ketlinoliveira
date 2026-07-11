@@ -24,12 +24,12 @@ export interface RacaResponse {
 export interface AnimalResponse {
   id: number;
   nome: string;
-  idade: string;
+  idade: number;
   porte: string;
   sexo: string;
   descricao: string;
   status: AnimalStatus;
-  fotoURL: string;
+  fotoUrl: string;
   dataCadastro: string;
 
   usuarioId?: number;
@@ -40,6 +40,18 @@ export interface AnimalResponse {
 
   racaId: number;
   racaNome: string;
+}
+
+export interface AnimalRequest {
+  nome: string;
+  idade?: number;
+  porte?: string;
+  sexo?: string;
+  descricao?: string;
+  fotoUrl?: string;
+  usuarioId: number;
+  especieId: number;
+  racaId: number;
 }
 
 export interface AdocaoResponse {

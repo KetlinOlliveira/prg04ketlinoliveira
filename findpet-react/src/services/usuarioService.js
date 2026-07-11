@@ -84,3 +84,9 @@ export async function loginUsuario(usuario) {
     body: JSON.stringify(usuario),
   });
 }
+
+export async function buscarUsuarioPorId(id) {
+  return requisicao(`/${id}`, {
+    method: "GET",
+  });
+}

@@ -1,6 +1,7 @@
 import { api } from "./api";
 import type { PageResponse } from "../types/api";
 import type {
+  AnimalRequest,
   AnimalResponse,
   EspecieResponse,
   RacaResponse,
@@ -9,7 +10,6 @@ import type {
 interface ListarAnimaisParams {
   page?: number;
   size?: number;
-  especieId?: number;
   status?: string;
 }
 
@@ -25,16 +25,16 @@ function buildQueryParams(params: Record<string, string | number | undefined>) {
   return searchParams.toString();
 }
 
+// A API só filtra por "status" no servidor (GET /api/animais?status=&page=&size=).
+// Filtros por espécie ou por dono são feitos no cliente, depois da busca.
 export async function listarAnimais({
   page = 0,
   size = 12,
-  especieId,
-  status = "DISPONIVEL",
+  status,
 }: ListarAnimaisParams = {}): Promise<PageResponse<AnimalResponse>> {
   const query = buildQueryParams({
     page,
     size,
-    especieId,
     status,
     sort: "nome,asc",
   });
@@ -46,6 +46,23 @@ export async function buscarAnimalPorId(
   id: number
 ): Promise<AnimalResponse> {
   return api.get<AnimalResponse>(`/animais/${id}`);
+}
+
+export async function criarAnimal(
+  animal: AnimalRequest
+): Promise<AnimalResponse> {
+  return api.post<AnimalResponse>("/animais", animal);
+}
+
+export async function atualizarAnimal(
+  id: number,
+  animal: AnimalRequest
+): Promise<AnimalResponse> {
+  return api.put<AnimalResponse>(`/animais/${id}`, animal);
+}
+
+export async function excluirAnimal(id: number): Promise<void> {
+  return api.delete<void>(`/animais/${id}`);
 }
 
 export async function listarEspecies(): Promise<PageResponse<EspecieResponse>> {

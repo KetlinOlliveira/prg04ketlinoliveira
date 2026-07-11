@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddressForm from "../../components/AddressForm/AddressForm";
+import AnimalForm from "../../components/AnimalForm/AnimalForm";
 import {
   getInicialUsuario,
   getUsuarioLogado,
@@ -8,7 +9,17 @@ import {
 } from "../../services/authStorage";
 import { buscarEnderecoPorId } from "../../services/enderecoService";
 import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
+import { buscarUsuarioPorId } from "../../services/usuarioService";
+import {
+  excluirAnimal,
+  listarAnimais,
+} from "../../services/animalService";
+import {
+  formatAnimalStatus,
+  getAnimalImageUrl,
+} from "../../utils/animalFormat";
 import type { EnderecoResponse, PessoaResponse } from "../../types/endereco";
+import type { AnimalResponse } from "../../types/animal";
 import "./Account.css";
 
 function Account() {
@@ -21,15 +32,59 @@ function Account() {
   const [mostrarFormularioEndereco, setMostrarFormularioEndereco] =
   useState(false);
 
+  const [meusAnimais, setMeusAnimais] = useState<AnimalResponse[]>([]);
+  const [carregandoAnimais, setCarregandoAnimais] = useState(true);
+  const [mostrarFormularioAnimal, setMostrarFormularioAnimal] =
+    useState(false);
+  const [animalEmEdicao, setAnimalEmEdicao] = useState<AnimalResponse | null>(
+    null
+  );
+
+  const [sessaoVerificada, setSessaoVerificada] = useState(false);
+
   useEffect(() => {
     if (!usuario) {
       navigate("/login");
+      return;
     }
+
+    // Confirma no servidor que a conta salva no navegador ainda existe e é a
+    // mesma (evita atribuir cadastros a outra conta caso a sessão salva
+    // esteja desatualizada/inválida, ex: banco de dados reiniciado). Usa um
+    // prazo curto: se a rede estiver lenta ou o servidor não responder a
+    // tempo, seguimos com a sessão salva em vez de travar a tela carregando.
+    async function validarSessao() {
+      try {
+        const usuarioAtual = await Promise.race([
+          buscarUsuarioPorId(usuario.id),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("tempo esgotado")), 10000)
+          ),
+        ]);
+
+        const emailConfere =
+          usuarioAtual?.email?.toLowerCase() === usuario.email?.toLowerCase();
+
+        if (!emailConfere) {
+          removerUsuarioLogado();
+          navigate("/login");
+          return;
+        }
+
+        setSessaoVerificada(true);
+      } catch {
+        // Não deu para confirmar a tempo (rede lenta, backend "acordando",
+        // etc.) — não travamos o usuário aqui, seguimos com a sessão local.
+        setSessaoVerificada(true);
+      }
+    }
+
+    validarSessao();
   }, [usuario, navigate]);
 
   useEffect(() => {
     async function carregarDadosDaConta() {
-      if (!usuario?.id) {
+      if (!usuario?.id || !sessaoVerificada) {
         return;
       }
 
@@ -58,10 +113,42 @@ function Account() {
     }
 
     carregarDadosDaConta();
-  }, [usuario]);
+  }, [usuario, sessaoVerificada]);
+
+  useEffect(() => {
+    async function carregarAnimais() {
+      if (!usuario?.id || !sessaoVerificada) {
+        return;
+      }
+
+      try {
+        setCarregandoAnimais(true);
+
+        const response = await listarAnimais({ size: 100 });
+
+        setMeusAnimais(
+          response.content.filter((animal) => animal.usuarioId === usuario.id)
+        );
+      } catch {
+        setMeusAnimais([]);
+      } finally {
+        setCarregandoAnimais(false);
+      }
+    }
+
+    carregarAnimais();
+  }, [usuario, sessaoVerificada]);
 
   if (!usuario) {
     return null;
+  }
+
+  if (!sessaoVerificada) {
+    return (
+      <main className="account-page">
+        <p className="account-loading">Carregando sua conta...</p>
+      </main>
+    );
   }
 
   function handleLogout() {
@@ -77,6 +164,54 @@ function Account() {
   setEndereco(enderecoSalvo);
   setMostrarFormularioEndereco(false);
 }
+
+  function handleNovoAnimal() {
+    setAnimalEmEdicao(null);
+    setMostrarFormularioAnimal(true);
+  }
+
+  function handleEditarAnimal(animal: AnimalResponse) {
+    setAnimalEmEdicao(animal);
+    setMostrarFormularioAnimal(true);
+  }
+
+  function handleAnimalSalvo(animalSalvo: AnimalResponse) {
+    setMeusAnimais((atual) => {
+      const jaExiste = atual.some((item) => item.id === animalSalvo.id);
+
+      if (jaExiste) {
+        return atual.map((item) =>
+          item.id === animalSalvo.id ? animalSalvo : item
+        );
+      }
+
+      return [animalSalvo, ...atual];
+    });
+
+    setMostrarFormularioAnimal(false);
+    setAnimalEmEdicao(null);
+  }
+
+  async function handleExcluirAnimal(animal: AnimalResponse) {
+    const confirmado = window.confirm(
+      `Tem certeza que deseja excluir ${animal.nome}? Essa ação não pode ser desfeita.`
+    );
+
+    if (!confirmado) {
+      return;
+    }
+
+    try {
+      await excluirAnimal(animal.id);
+      setMeusAnimais((atual) => atual.filter((item) => item.id !== animal.id));
+    } catch (error) {
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível excluir o animal."
+      );
+    }
+  }
 
   return (
     <main className="account-page">
@@ -99,10 +234,10 @@ function Account() {
             <a href="#perfil">Perfil</a>
             <a href="#endereco">Endereço</a>
             <a href="#pets">Meus pets</a>
-
             <button type="button" onClick={handleLogout}>
-              Sair
+                  Sair
             </button>
+           
           </nav>
         </aside>
 
@@ -248,10 +383,102 @@ function Account() {
 </section>
 
           <section className="account-card" id="pets">
-            <h2>Meus pets</h2>
-            <p className="account-muted">
-              Futuramente seus pets cadastrados aparecerão nesta área.
-            </p>
+            <div className="account-card__header account-card__header--row">
+              <div>
+                <h2>Meus pets</h2>
+                <p className="account-muted">
+                  Cadastre animais para adoção e gerencie os que você já
+                  publicou no feed.
+                </p>
+              </div>
+
+              {!mostrarFormularioAnimal && (
+                <button
+                  type="button"
+                  className="account-address-action"
+                  onClick={handleNovoAnimal}
+                >
+                  Cadastrar novo pet
+                </button>
+              )}
+            </div>
+
+            {mostrarFormularioAnimal ? (
+              <AnimalForm
+                usuarioId={usuario.id}
+                animalAtual={animalEmEdicao}
+                onSalvo={handleAnimalSalvo}
+                onCancel={() => {
+                  setMostrarFormularioAnimal(false);
+                  setAnimalEmEdicao(null);
+                }}
+              />
+            ) : carregandoAnimais ? (
+              <p className="account-muted">Carregando seus pets...</p>
+            ) : meusAnimais.length === 0 ? (
+              <div className="account-address-empty">
+                <div
+                  className="account-address-empty__icon"
+                  aria-hidden="true"
+                >
+                  🐾
+                </div>
+                <h3>Nenhum pet cadastrado</h3>
+                <p>
+                  Cadastre um animal para que ele apareça no feed de adoção da
+                  página inicial.
+                </p>
+              </div>
+            ) : (
+              <ul className="account-pets-list">
+                {meusAnimais.map((animal) => {
+                  const imagemUrl = getAnimalImageUrl(animal.fotoUrl);
+
+                  return (
+                    <li key={animal.id} className="account-pet-card">
+                      <div className="account-pet-card__media">
+                        {imagemUrl ? (
+                          <img
+                            src={imagemUrl}
+                            alt={`Foto de ${animal.nome}`}
+                          />
+                        ) : (
+                          <span aria-hidden="true">
+                            {animal.nome.charAt(0)}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="account-pet-card__info">
+                        <strong>{animal.nome}</strong>
+                        <span>
+                          {animal.especieNome} · {animal.racaNome}
+                        </span>
+                        <span className="account-pet-card__status">
+                          {formatAnimalStatus(animal.status)}
+                        </span>
+                      </div>
+
+                      <div className="account-pet-card__actions">
+                        <button
+                          type="button"
+                          onClick={() => handleEditarAnimal(animal)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          className="account-pet-card__delete"
+                          onClick={() => handleExcluirAnimal(animal)}
+                        >
+                          Excluir
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </section>
         </section>
       </section>

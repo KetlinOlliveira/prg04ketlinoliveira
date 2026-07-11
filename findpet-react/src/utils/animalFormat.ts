@@ -12,16 +12,38 @@ export function formatAnimalStatus(status: string): string {
   return labels[status] ?? status;
 }
 
-export function getAnimalImageUrl(fotoURL?: string | null): string {
-  if (!fotoURL) {
+export function getSexoIcon(sexo?: string | null): string {
+  const valor = normalizeText(sexo ?? "");
+
+  if (valor.startsWith("m")) {
+    return "♂";
+  }
+
+  if (valor.startsWith("f")) {
+    return "♀";
+  }
+
+  return "";
+}
+
+export function getAnimalImageUrl(fotoUrl?: string | null): string {
+  if (!fotoUrl) {
     return "";
   }
 
-  if (fotoURL.startsWith("http") || fotoURL.startsWith("/")) {
-    return fotoURL;
+  if (fotoUrl.startsWith("http") || fotoUrl.startsWith("/")) {
+    return fotoUrl;
   }
 
-  return `${API_ORIGIN}/${fotoURL}`;
+  return `${API_ORIGIN}/${fotoUrl}`;
+}
+
+export function formatAnimalIdade(idade?: number | null): string {
+  if (idade === null || idade === undefined) {
+    return "Idade não informada";
+  }
+
+  return idade === 1 ? "1 ano" : `${idade} anos`;
 }
 
 export function normalizeText(value: string): string {

@@ -97,6 +97,16 @@
   line-height: 1;
 }
 
+/*
+  Mobile-first: no celular só cabem a conta/login e o botão de menu na
+  barra. "Fazer quiz" e "Adotar um amigo" ficam escondidos aqui e reaparecem
+  dentro do menu hambúrguer (topbar-nav-link--mobile-only), voltando à barra
+  a partir do breakpoint de tablet/desktop.
+*/
+.topbar-link--collapsible {
+  display: none;
+}
+
 .topbar-nav {
   position: fixed;
   top: 0;
@@ -171,5 +181,13 @@
   .btn-adotar-header {
     font-size: 13px;
     padding: 12px 28px;
+  }
+
+  .topbar-link--collapsible {
+    display: inline-block;
+  }
+
+  .topbar-nav-link--mobile-only {
+    display: none;
   }
 }

@@ -1,20 +1,19 @@
 import { useState } from "react";
 import type { AnimalResponse } from "../../types/animal";
-import {
-  formatAnimalStatus,
-  getAnimalImageUrl,
-} from "../../utils/animalFormat";
+import { getAnimalImageUrl, getSexoIcon } from "../../utils/animalFormat";
 import "./AnimalCard.css";
 
 interface AnimalCardProps {
   animal: AnimalResponse;
   onSelect: (animal: AnimalResponse) => void;
+  localizacao?: string;
 }
 
-function AnimalCard({ animal, onSelect }: AnimalCardProps) {
+function AnimalCard({ animal, onSelect, localizacao }: AnimalCardProps) {
   const [imgError, setImgError] = useState<boolean>(false);
 
-  const imageUrl = getAnimalImageUrl(animal.fotoURL);
+  const imageUrl = getAnimalImageUrl(animal.fotoUrl);
+  const sexoIcon = getSexoIcon(animal.sexo);
 
   return (
     <article className="animal-card">
@@ -38,30 +37,26 @@ function AnimalCard({ animal, onSelect }: AnimalCardProps) {
               onError={() => setImgError(true)}
             />
           )}
-
-          <span className="animal-card__status">
-            {formatAnimalStatus(animal.status)}
-          </span>
         </div>
 
         <div className="animal-card__body">
           <div className="animal-card__heading">
             <h3 className="animal-card__name">{animal.nome}</h3>
 
-            <span className="animal-card__species">
-              {animal.especieNome}
-            </span>
+            {sexoIcon && (
+              <span
+                className="animal-card__sexo"
+                aria-label={animal.sexo}
+                title={animal.sexo}
+              >
+                {sexoIcon}
+              </span>
+            )}
           </div>
 
-          <p className="animal-card__breed">{animal.racaNome}</p>
-
-          <div className="animal-card__details">
-            <span>{animal.idade}</span>
-            <span>{animal.porte}</span>
-            <span>{animal.sexo}</span>
-          </div>
-
-          <span className="animal-card__cta">Ver detalhes →</span>
+          <p className="animal-card__location">
+            {localizacao ?? `${animal.especieNome} · ${animal.racaNome}`}
+          </p>
         </div>
       </button>
     </article>

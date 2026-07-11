@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { AnimalResponse } from "../../types/animal";
 import {
+  formatAnimalIdade,
   formatAnimalStatus,
   getAnimalImageUrl,
 } from "../../utils/animalFormat";
@@ -42,7 +43,7 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
     return null;
   }
 
-  const imageUrl = getAnimalImageUrl(animal.fotoURL);
+  const imageUrl = getAnimalImageUrl(animal.fotoUrl);
 
   return (
     <div
@@ -97,7 +98,9 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
           <ul className="animal-modal__facts">
             <li className="animal-modal__fact">
               <span className="animal-modal__fact-label">Idade</span>
-              <span className="animal-modal__fact-value">{animal.idade}</span>
+              <span className="animal-modal__fact-value">
+                {formatAnimalIdade(animal.idade)}
+              </span>
             </li>
 
             <li className="animal-modal__fact">

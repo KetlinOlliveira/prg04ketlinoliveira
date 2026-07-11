@@ -1,11 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { animalCategories } from "../../data/animalCategories";
-import { listarAnimais, listarEspecies } from "../../services/animalService";
-import type {
-  AnimalResponse,
-  CategoryFilter,
-  EspecieResponse,
-} from "../../types/animal";
+import { listarAnimais } from "../../services/animalService";
+import { listarPessoas } from "../../services/pessoaService";
+import type { AnimalResponse, CategoryFilter } from "../../types/animal";
 import { getCategorySlugByEspecieName } from "../../utils/animalFormat";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
 import AnimalGrid from "../AnimalGrid/AnimalGrid";
@@ -16,38 +13,55 @@ function AdoptionSection() {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilter>("todos");
 
-  const [especies, setEspecies] = useState<EspecieResponse[]>([]);
-  const [animals, setAnimals] = useState<AnimalResponse[]>([]);
+  const [animaisDisponiveis, setAnimaisDisponiveis] = useState<
+    AnimalResponse[]
+  >([]);
   const [selectedAnimal, setSelectedAnimal] =
     useState<AnimalResponse | null>(null);
+  const [localizacaoPorUsuario, setLocalizacaoPorUsuario] = useState<
+    Record<number, string>
+  >({});
 
   const [isLoadingAnimals, setIsLoadingAnimals] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const selectedEspecieId = useMemo(() => {
+  // A API não filtra por espécie no servidor, então buscamos todos os
+  // animais disponíveis de uma vez e filtramos por categoria no cliente.
+  const animals = useMemo(() => {
     if (selectedCategory === "todos") {
-      return undefined;
+      return animaisDisponiveis;
     }
 
-    const especieEncontrada = especies.find((especie) => {
-      const slug = getCategorySlugByEspecieName(especie.nome);
-      return slug === selectedCategory;
-    });
-
-    return especieEncontrada?.id;
-  }, [selectedCategory, especies]);
+    return animaisDisponiveis.filter(
+      (animal) =>
+        getCategorySlugByEspecieName(animal.especieNome) === selectedCategory
+    );
+  }, [animaisDisponiveis, selectedCategory]);
 
   useEffect(() => {
-    async function carregarEspecies() {
+    async function carregarLocalizacoes() {
       try {
-        const response = await listarEspecies();
-        setEspecies(response.content);
+        const response = await listarPessoas();
+
+        const mapa: Record<number, string> = {};
+
+        response.content.forEach((pessoa) => {
+          if (!pessoa.cidade) {
+            return;
+          }
+
+          mapa[pessoa.usuarioId] = pessoa.estado
+            ? `${pessoa.cidade} - ${pessoa.estado}`
+            : pessoa.cidade;
+        });
+
+        setLocalizacaoPorUsuario(mapa);
       } catch {
-        setEspecies([]);
+        setLocalizacaoPorUsuario({});
       }
     }
 
-    carregarEspecies();
+    carregarLocalizacoes();
   }, []);
 
   useEffect(() => {
@@ -57,29 +71,29 @@ function AdoptionSection() {
         setError("");
 
         const response = await listarAnimais({
-          especieId: selectedEspecieId,
           status: "DISPONIVEL",
+          size: 100,
         });
 
-        setAnimals(response.content);
+        setAnimaisDisponiveis(response.content);
       } catch {
         setError(
           "Não foi possível carregar os animais. Verifique se o backend está rodando e se o endpoint /api/animais já foi criado."
         );
-        setAnimals([]);
+        setAnimaisDisponiveis([]);
       } finally {
         setIsLoadingAnimals(false);
       }
     }
 
     carregarAnimais();
-  }, [selectedEspecieId]);
+  }, []);
 
   return (
     <section className="adoption-section" id="adotar">
       <div className="adoption-section__inner">
         <header className="adoption-section__intro">
-          
+
 
           <h2 className="adoption-section__title">
             Mudando vidas, uma pata de cada vez!
@@ -97,6 +111,7 @@ function AdoptionSection() {
           isLoading={isLoadingAnimals}
           error={error}
           onSelectAnimal={setSelectedAnimal}
+          localizacaoPorUsuario={localizacaoPorUsuario}
         />
       </div>
 

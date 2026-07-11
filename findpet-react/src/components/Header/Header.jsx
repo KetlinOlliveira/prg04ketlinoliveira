@@ -15,8 +15,6 @@ import "./Header.css";
 
 // Função para renderizar o componente Header
 function Header() {
-
-  function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [usuarioLogado, setUsuarioLogado] = useState(getUsuarioLogado());
 
@@ -36,15 +34,6 @@ function Header() {
     };
   }, []);
 
-  function closeMenu() {
-    setIsMenuOpen(false);
-  }
-}
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const usuarioLogado = getUsuarioLogado();
-  const usuarioEstaLogado = Boolean(usuarioLogado);
-
   function toggleMenu() {
     setIsMenuOpen((currentState) => !currentState);
   }
@@ -61,11 +50,10 @@ function Header() {
 
       <div className="topbar-right">
 
-
-      <Link to="/quiz" className="btn-login-header">
+      <Link to="/quiz" className="btn-login-header topbar-link--collapsible">
         Fazer quiz
       </Link>
-      
+
         {usuarioEstaLogado ? (
           <Link to="/conta" className="btn-conta-header">
             <span className="btn-conta-header__avatar">
@@ -79,7 +67,10 @@ function Header() {
           </Link>
         )}
 
-        <Link to="/contato" className="btn-adotar-header">
+        <Link
+          to="/contato"
+          className="btn-adotar-header topbar-link--collapsible"
+        >
           Adotar um amigo
         </Link>
 
@@ -107,6 +98,10 @@ function Header() {
           Início
         </Link>
 
+        <Link to="/quiz" onClick={closeMenu} className="topbar-nav-link--mobile-only">
+          Fazer quiz
+        </Link>
+
         <Link to="/palheta" onClick={closeMenu}>
           Palheta
         </Link>
@@ -115,7 +110,9 @@ function Header() {
           Contato
         </Link>
 
-
+        <Link to="/contato" onClick={closeMenu} className="topbar-nav-link--mobile-only">
+          Adotar um amigo
+        </Link>
 
        {usuarioEstaLogado ? (
         <Link to="/conta" onClick={closeMenu}>

@@ -11,6 +11,16 @@
   font-family: "Poppins", sans-serif;
 }
 
+.account-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--magno);
+  font-size: 1rem;
+  text-align: center;
+}
+
 .account-page button,
 .account-page input,
 .account-page textarea,
@@ -367,6 +377,132 @@
 .account-address-empty p {
   color: var(--magno);
   line-height: 1.6;
+}
+
+/* =========================
+   Meus pets
+========================= */
+
+.account-pets-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.account-pet-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  background: linear-gradient(135deg, #fffaf5 0%, var(--creme) 100%);
+  border: 1px solid rgba(59, 31, 16, 0.1);
+  border-radius: 22px;
+  padding: 0.9rem;
+}
+
+.account-pet-card__media {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--pessego);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cobre);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.account-pet-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account-pet-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.account-pet-card__info strong {
+  color: var(--cafe);
+  font-size: 1.05rem;
+  overflow-wrap: break-word;
+}
+
+.account-pet-card__info span {
+  color: var(--magno);
+  font-size: 0.85rem;
+  overflow-wrap: break-word;
+}
+
+.account-pet-card__status {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.2rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--pessego);
+  color: var(--cobre);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.account-pet-card__actions {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(59, 31, 16, 0.08);
+}
+
+.account-pet-card__actions button {
+  flex: 1;
+}
+
+.account-pet-card__actions button {
+  border: 1px solid rgba(59, 31, 16, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cafe);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.account-pet-card__actions button:hover {
+  background: var(--pessego);
+}
+
+.account-pet-card__delete {
+  border-color: rgba(201, 76, 94, 0.35) !important;
+  color: var(--rosa) !important;
+}
+
+.account-pet-card__delete:hover {
+  background: rgba(201, 76, 94, 0.12) !important;
+}
+
+@media (min-width: 500px) {
+  .account-pet-card__actions {
+    flex: 0 0 auto;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .account-pet-card__actions button {
+    flex: none;
+  }
 }
 
 /* =========================

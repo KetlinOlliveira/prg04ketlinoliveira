@@ -7,6 +7,7 @@ interface AnimalGridProps {
   isLoading: boolean;
   error: string;
   onSelectAnimal: (animal: AnimalResponse) => void;
+  localizacaoPorUsuario?: Record<number, string>;
 }
 
 function AnimalGrid({
@@ -14,6 +15,7 @@ function AnimalGrid({
   isLoading,
   error,
   onSelectAnimal,
+  localizacaoPorUsuario = {},
 }: AnimalGridProps) {
   if (isLoading) {
     return <p className="animal-grid__message">Carregando animais...</p>;
@@ -38,6 +40,9 @@ function AnimalGrid({
           key={animal.id}
           animal={animal}
           onSelect={onSelectAnimal}
+          localizacao={
+            animal.usuarioId ? localizacaoPorUsuario[animal.usuarioId] : undefined
+          }
         />
       ))}
     </div>
