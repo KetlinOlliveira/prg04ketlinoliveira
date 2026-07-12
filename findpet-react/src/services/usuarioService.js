@@ -101,3 +101,11 @@ export async function buscarUsuarioPorId(id) {
     method: "GET",
   });
 }
+
+// Atualiza (ou remove, enviando string vazia) a foto de perfil do usuário.
+export async function atualizarFotoUsuario(id, fotoUrl) {
+  return requisicao(`/${id}/foto`, {
+    method: "PUT",
+    body: JSON.stringify({ fotoUrl }),
+  });
+}

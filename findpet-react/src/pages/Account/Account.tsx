@@ -6,10 +6,11 @@ import {
   getInicialUsuario,
   getUsuarioLogado,
   removerUsuarioLogado,
+  salvarUsuarioLogado,
 } from "../../services/authStorage";
 import { buscarEnderecoPorId } from "../../services/enderecoService";
 import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
-import { buscarUsuarioPorId } from "../../services/usuarioService";
+import { atualizarFotoUsuario, buscarUsuarioPorId } from "../../services/usuarioService";
 import {
   excluirAnimal,
   listarAnimais,
@@ -18,13 +19,17 @@ import {
   formatAnimalStatus,
   getAnimalImageUrl,
 } from "../../utils/animalFormat";
+import { redimensionarImagem } from "../../utils/imageResize";
 import type { EnderecoResponse, PessoaResponse } from "../../types/endereco";
 import type { AnimalResponse } from "../../types/animal";
 import "./Account.css";
 
 function Account() {
   const navigate = useNavigate();
-  const [usuario] = useState(() => getUsuarioLogado());
+  const [usuario, setUsuario] = useState(() => getUsuarioLogado());
+
+  const [enviandoFoto, setEnviandoFoto] = useState(false);
+  const [erroFoto, setErroFoto] = useState("");
 
   const [pessoa, setPessoa] = useState<PessoaResponse | null>(null);
   const [endereco, setEndereco] = useState<EnderecoResponse | null>(null);
@@ -156,6 +161,41 @@ function Account() {
     navigate("/");
   }
 
+  async function handleSelecionarFotoPerfil(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const arquivo = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!arquivo || !usuario) {
+      return;
+    }
+
+    if (!arquivo.type.startsWith("image/")) {
+      setErroFoto("Selecione um arquivo de imagem (JPG, PNG, etc).");
+      return;
+    }
+
+    try {
+      setEnviandoFoto(true);
+      setErroFoto("");
+
+      const dataUrl = await redimensionarImagem(arquivo);
+      const usuarioAtualizado = await atualizarFotoUsuario(usuario.id, dataUrl);
+
+      setUsuario(usuarioAtualizado);
+      salvarUsuarioLogado(usuarioAtualizado);
+    } catch (error) {
+      setErroFoto(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível atualizar a foto de perfil."
+      );
+    } finally {
+      setEnviandoFoto(false);
+    }
+  }
+
   function handleEnderecoSalvo(
   pessoaSalva: PessoaResponse,
   enderecoSalvo: EnderecoResponse
@@ -222,7 +262,13 @@ function Account() {
           </Link>
 
           <div className="account-sidebar__profile">
-            <div className="account-avatar">{getInicialUsuario(usuario)}</div>
+            <div className="account-avatar">
+              {usuario.fotoUrl ? (
+                <img src={usuario.fotoUrl} alt="" />
+              ) : (
+                getInicialUsuario(usuario)
+              )}
+            </div>
 
             <div>
               <strong>{usuario.nome}</strong>
@@ -257,7 +303,11 @@ function Account() {
           <section className="account-card" id="perfil">
             <div className="account-profile-top">
               <div className="account-avatar account-avatar--large">
-                {getInicialUsuario(usuario)}
+                {usuario.fotoUrl ? (
+                  <img src={usuario.fotoUrl} alt={`Foto de ${usuario.nome}`} />
+                ) : (
+                  getInicialUsuario(usuario)
+                )}
               </div>
 
               <div>
@@ -266,6 +316,19 @@ function Account() {
                 <span className="account-status">
                   {usuario.ativo ? "Conta ativa" : "Conta inativa"}
                 </span>
+
+                <label className="account-foto-action">
+                  {enviandoFoto ? "Enviando foto..." : "Alterar foto de perfil"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleSelecionarFotoPerfil}
+                    disabled={enviandoFoto}
+                    hidden
+                  />
+                </label>
+
+                {erroFoto && <p className="account-foto-erro">{erroFoto}</p>}
               </div>
             </div>
           </section>

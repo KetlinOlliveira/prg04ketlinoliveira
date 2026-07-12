@@ -74,6 +74,13 @@
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
+  overflow: hidden;
+}
+
+.btn-conta-header__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .btn-adotar-header {
