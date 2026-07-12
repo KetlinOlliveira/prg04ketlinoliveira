@@ -1,3 +1,5 @@
+import { getToken } from "./authStorage";
+
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080/api";
 
 const API_URL = `${API_BASE_URL}/usuarios`;
@@ -50,12 +52,14 @@ async function extrairMensagemErro(resposta) {
 // tratamento de erro próprio, diferente do cliente genérico em api.ts).
 async function requisicao(endpoint, options) {
   let resposta;
+  const token = getToken();
 
   try {
     resposta = await fetch(`${API_URL}${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
       },
     });

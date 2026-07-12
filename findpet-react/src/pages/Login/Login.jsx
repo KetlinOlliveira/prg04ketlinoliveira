@@ -105,12 +105,12 @@ function alternarModo() {
     setCarregando(true);
     setMensagem("");
 
-    const usuario = await loginUsuario({
+    const resposta = await loginUsuario({
       email: email.trim(),
       senha: senha,
     });
 
-    salvarUsuarioLogado(usuario);
+    salvarUsuarioLogado(resposta.usuario, resposta.token);
 
     navigate("/");
   } catch (error) {
