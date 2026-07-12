@@ -31,7 +31,11 @@ export function getAnimalImageUrl(fotoUrl?: string | null): string {
     return "";
   }
 
-  if (fotoUrl.startsWith("http") || fotoUrl.startsWith("/")) {
+  if (
+    fotoUrl.startsWith("http") ||
+    fotoUrl.startsWith("/") ||
+    fotoUrl.startsWith("data:")
+  ) {
     return fotoUrl;
   }
 

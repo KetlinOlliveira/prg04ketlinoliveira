@@ -68,7 +68,7 @@ function Header() {
         )}
 
         <Link
-          to="/contato"
+          to="/#adotar"
           className="btn-adotar-header topbar-link--collapsible"
         >
           Adotar um amigo
@@ -110,7 +110,7 @@ function Header() {
           Contato
         </Link>
 
-        <Link to="/contato" onClick={closeMenu} className="topbar-nav-link--mobile-only">
+        <Link to="/#adotar" onClick={closeMenu} className="topbar-nav-link--mobile-only">
           Adotar um amigo
         </Link>
 

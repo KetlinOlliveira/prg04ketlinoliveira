@@ -8,6 +8,8 @@ import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
+  // "login" mostra só email/senha; "cadastro" mostra nome também
+  const [modo, setModo] = useState("login");
   //state para armazenar os valores dos campos do formulário
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -73,15 +75,21 @@ function validarLogin() {
       senha: senha,
     });
 
+    setModo("login");
     setMensagem("Conta criada com sucesso! Agora você já pode entrar.");
     setNome("");
-    setEmail("");
     setSenha("");
   } catch (error) {
     setMensagem(error.message || "Erro ao cadastrar usuário.");
   } finally {
     setCarregando(false);
   }
+}
+
+// Alterna entre o formulário de login e o de cadastro
+function alternarModo() {
+  setModo((modoAtual) => (modoAtual === "login" ? "cadastro" : "login"));
+  setMensagem("");
 }
 
   // Função para lidar com o login do usuário
@@ -132,21 +140,27 @@ function validarLogin() {
             </div>
           </div>
 
-          <h2>Bem-vindo de volta!</h2>
+          <h2>
+            {modo === "login" ? "Bem-vindo de volta!" : "Criar conta"}
+          </h2>
           <p className="subtitle">
-            Entre ou crie sua conta para continuar no FindPet.
+            {modo === "login"
+              ? "Entre com seu email e senha para continuar no FindPet."
+              : "Preencha seus dados para criar sua conta no FindPet."}
           </p>
 
           <form>
-            <div className="input-field">
-              <label>Nome</label>
-              <input
-                type="text"
-                placeholder="Seu nome"
-                value={nome}
-                onChange={(event) => setNome(event.target.value)}
-              />
-            </div>
+            {modo === "cadastro" && (
+              <div className="input-field">
+                <label>Nome</label>
+                <input
+                  type="text"
+                  placeholder="Seu nome"
+                  value={nome}
+                  onChange={(event) => setNome(event.target.value)}
+                />
+              </div>
+            )}
 
             <div className="input-field">
               <label>Email</label>
@@ -170,23 +184,47 @@ function validarLogin() {
 
             {mensagem && <p className="mensagem-login">{mensagem}</p>}
 
-            <button
-              type="button"
-              className="btn-login"
-              onClick={handleLogin}
-              disabled={carregando}
-            >
-              {carregando ? "Aguarde..." : "Entrar"}
-            </button>
+            {modo === "login" ? (
+              <>
+                <button
+                  type="button"
+                  className="btn-login"
+                  onClick={handleLogin}
+                  disabled={carregando}
+                >
+                  {carregando ? "Aguarde..." : "Entrar"}
+                </button>
 
-            <button
-              type="button"
-              className="btn-cadastro"
-              onClick={handleCadastro}
-              disabled={carregando}
-            >
-              Criar conta
-            </button>
+                <button
+                  type="button"
+                  className="btn-cadastro"
+                  onClick={alternarModo}
+                  disabled={carregando}
+                >
+                  Cadastrar
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="btn-login"
+                  onClick={handleCadastro}
+                  disabled={carregando}
+                >
+                  {carregando ? "Aguarde..." : "Criar conta"}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-cadastro"
+                  onClick={alternarModo}
+                  disabled={carregando}
+                >
+                  Já tenho conta
+                </button>
+              </>
+            )}
           </form>
         </div>
 

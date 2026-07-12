@@ -31,10 +31,12 @@
 .animal-card__media {
   position: relative;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 100%;
   aspect-ratio: 1 / 1;
+  overflow: hidden;
   background-color: var(--pessego);
 }
 

@@ -5,6 +5,8 @@ import {
   formatAnimalStatus,
   getAnimalImageUrl,
 } from "../../utils/animalFormat";
+import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
+import { buscarUsuarioPorId } from "../../services/usuarioService";
 import "./AnimalModal.css";
 
 interface AnimalModalProps {
@@ -12,11 +14,25 @@ interface AnimalModalProps {
   onClose: () => void;
 }
 
+interface ContatoDono {
+  nome: string;
+  email?: string;
+  telefone?: string;
+}
+
 function AnimalModal({ animal, onClose }: AnimalModalProps) {
   const [imgError, setImgError] = useState<boolean>(false);
 
+  const [mostrarContato, setMostrarContato] = useState(false);
+  const [contato, setContato] = useState<ContatoDono | null>(null);
+  const [carregandoContato, setCarregandoContato] = useState(false);
+  const [erroContato, setErroContato] = useState("");
+
   useEffect(() => {
     setImgError(false);
+    setMostrarContato(false);
+    setContato(null);
+    setErroContato("");
   }, [animal]);
 
   useEffect(() => {
@@ -26,6 +42,10 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
 
     function handleKey(event: KeyboardEvent) {
       if (event.key === "Escape") {
+        if (mostrarContato) {
+          setMostrarContato(false);
+          return;
+        }
         onClose();
       }
     }
@@ -37,13 +57,41 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
       document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
     };
-  }, [animal, onClose]);
+  }, [animal, onClose, mostrarContato]);
 
   if (!animal) {
     return null;
   }
 
   const imageUrl = getAnimalImageUrl(animal.fotoUrl);
+
+  async function handleQueroAdotar() {
+    setMostrarContato(true);
+
+    if (contato || !animal?.usuarioId) {
+      return;
+    }
+
+    try {
+      setCarregandoContato(true);
+      setErroContato("");
+
+      const [usuario, pessoa] = await Promise.all([
+        buscarUsuarioPorId(animal.usuarioId).catch(() => null),
+        buscarPessoaPorUsuarioId(animal.usuarioId).catch(() => null),
+      ]);
+
+      setContato({
+        nome: usuario?.nome ?? animal.usuarioNome ?? "Tutor do animal",
+        email: usuario?.email,
+        telefone: pessoa?.telefone,
+      });
+    } catch {
+      setErroContato("Não foi possível carregar os dados de contato.");
+    } finally {
+      setCarregandoContato(false);
+    }
+  }
 
   return (
     <div
@@ -123,11 +171,83 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
           )}
 
           <div className="animal-modal__actions">
-            <button type="button" className="animal-modal__adopt">
+            <button
+              type="button"
+              className="animal-modal__adopt"
+              onClick={handleQueroAdotar}
+            >
               Quero adotar
             </button>
           </div>
         </div>
+
+        {mostrarContato && (
+          <div
+            className="animal-modal__contato-overlay"
+            onClick={() => setMostrarContato(false)}
+          >
+            <div
+              className="animal-modal__contato"
+              onClick={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="animal-modal-contato-title"
+            >
+              <button
+                type="button"
+                className="animal-modal__contato-close"
+                onClick={() => setMostrarContato(false)}
+                aria-label="Fechar"
+              >
+                ×
+              </button>
+
+              <h3 id="animal-modal-contato-title">Contato para adoção</h3>
+
+              {carregandoContato && (
+                <p className="animal-modal__contato-status">
+                  Carregando dados de contato...
+                </p>
+              )}
+
+              {erroContato && (
+                <p className="animal-modal__contato-status animal-modal__contato-status--erro">
+                  {erroContato}
+                </p>
+              )}
+
+              {contato && !carregandoContato && (
+                <>
+                  <p className="animal-modal__contato-intro">
+                    Fale com <strong>{contato.nome}</strong> para combinar a
+                    adoção de <strong>{animal.nome}</strong>:
+                  </p>
+
+                  <ul className="animal-modal__contato-lista">
+                    {contato.email && (
+                      <li>
+                        <span aria-hidden="true">📧</span> {contato.email}
+                      </li>
+                    )}
+
+                    {contato.telefone && (
+                      <li>
+                        <span aria-hidden="true">📱</span> {contato.telefone}
+                      </li>
+                    )}
+
+                    {!contato.email && !contato.telefone && (
+                      <li>
+                        Esse tutor ainda não cadastrou um contato. Tente pelo
+                        formulário de contato do FindPet.
+                      </li>
+                    )}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

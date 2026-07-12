@@ -18,7 +18,7 @@ function Hero() {
       </h1>
 
       <div className="hero-bottom">
-        <Link to="/contato" className="btn-adotar-hero">
+        <Link to="/#adotar" className="btn-adotar-hero">
           Adotar agora →
         </Link>
       </div>
