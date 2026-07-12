@@ -3,6 +3,8 @@ import ColorSwatches from "../../components/ColorSwatches/ColorSwatches";
 import { colorPsychology } from "../../data/colorPalette";
 import "./Palette.css";
 
+// Página que documenta a identidade visual do projeto: mostra a paleta de
+// cores (ColorSwatches) e o raciocínio por trás de cada grupo de cores.
 function Palette() {
   return (
     <main className="palette-page">

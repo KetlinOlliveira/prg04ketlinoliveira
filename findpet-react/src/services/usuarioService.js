@@ -2,6 +2,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080/api"
 
 const API_URL = `${API_BASE_URL}/usuarios`;
 
+// Traduz mensagens de erro cruas do backend para um texto mais amigável.
 function normalizarMensagemErro(mensagem) {
   const mensagens = {
     "Email não encontrado.": "Usuário não cadastrado.",
@@ -13,6 +14,7 @@ function normalizarMensagemErro(mensagem) {
   return mensagens[mensagem] ?? mensagem;
 }
 
+// Lê o corpo de uma resposta de erro e extrai a mensagem mais útil dela.
 async function extrairMensagemErro(resposta) {
   const texto = await resposta.text();
 
@@ -44,6 +46,8 @@ async function extrairMensagemErro(resposta) {
   }
 }
 
+// Wrapper de fetch específico do módulo de usuários (login/cadastro têm um
+// tratamento de erro próprio, diferente do cliente genérico em api.ts).
 async function requisicao(endpoint, options) {
   let resposta;
 
@@ -71,6 +75,7 @@ async function requisicao(endpoint, options) {
   return resposta.json();
 }
 
+// Cria uma nova conta de usuário.
 export async function cadastrarUsuario(usuario) {
   return requisicao("/cadastro", {
     method: "POST",
@@ -78,6 +83,7 @@ export async function cadastrarUsuario(usuario) {
   });
 }
 
+// Autentica um usuário por email/senha e devolve seus dados.
 export async function loginUsuario(usuario) {
   return requisicao("/login", {
     method: "POST",
@@ -85,6 +91,7 @@ export async function loginUsuario(usuario) {
   });
 }
 
+// Busca um usuário pelo id (usado para revalidar a sessão salva no navegador).
 export async function buscarUsuarioPorId(id) {
   return requisicao(`/${id}`, {
     method: "GET",

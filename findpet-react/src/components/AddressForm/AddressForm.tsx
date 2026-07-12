@@ -15,6 +15,8 @@ import type {
 } from "../../types/endereco";
 import "./AddressForm.css";
 
+// Formulário de cadastro/edição do endereço e dos dados pessoais (CPF,
+// telefone, nascimento) do usuário logado, usado na página de Conta.
 interface AddressFormProps {
   usuarioId: number;
   pessoaAtual: PessoaResponse | null;
@@ -310,9 +312,22 @@ function AddressForm({
         </p>
       )}
 
-      <button type="submit" className="address-form__submit" disabled={salvando}>
-        {salvando ? "Salvando..." : "Salvar endereço"}
-      </button>
+     <div className="address-form__actions">
+        {onCancel && (
+            <button
+            type="button"
+            className="address-form__cancel"
+            onClick={onCancel}
+            disabled={salvando}
+            >
+            Cancelar
+            </button>
+        )}
+
+        <button type="submit" className="address-form__submit" disabled={salvando}>
+            {salvando ? "Salvando..." : "Salvar endereço"}
+        </button>
+        </div>
     </form>
   );
 }

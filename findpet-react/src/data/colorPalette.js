@@ -1,3 +1,4 @@
+// Lista de cores da identidade visual, exibida na página /palheta (ColorSwatches).
 export const colorPalette = [
   {
     id: 1,
@@ -57,6 +58,8 @@ export const colorPalette = [
   }
 ];
 
+// Textos explicando a psicologia por trás de cada grupo de cores, exibidos
+// na seção "Psicologia das cores" da página /palheta.
 export const colorPsychology = [
   {
     id: 1,

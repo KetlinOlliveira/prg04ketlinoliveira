@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { CategoryFilter, CategoryOption } from "../../types/animal";
 import "./CategoryCarousel.css";
 
+// Carrossel horizontal com as categorias (Todos/Cães/Gatos/...) usado para
+// filtrar o feed de adoção. CategoryItem trata o próprio fallback de ícone.
 interface CategoryCarouselProps {
   categories: CategoryOption[];
   selected: CategoryFilter;

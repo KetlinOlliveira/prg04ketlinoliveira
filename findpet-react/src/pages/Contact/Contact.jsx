@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import petsContato from "../../assets/images/pets-contato.jpg";
 import "./Contact.css";
 
+// Página estática de contato do FindPet (telefone/email/endereço fictícios).
 function Contact() {
   return (
     <main className="contact-page">

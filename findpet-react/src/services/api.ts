@@ -5,6 +5,8 @@ export const API_BASE_URL =
 
 export const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
 
+// Faz a chamada HTTP e converte qualquer resposta de erro da API num Error
+// com mensagem amigável, para os componentes só precisarem tratar try/catch.
 async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -44,6 +46,8 @@ async function apiRequest<T>(
   return response.json() as Promise<T>;
 }
 
+// Cliente HTTP genérico usado por todos os services (animalService,
+// enderecoService, pessoaService etc.) para falar com o backend.
 export const api = {
   get<T>(endpoint: string) {
     return apiRequest<T>(endpoint);

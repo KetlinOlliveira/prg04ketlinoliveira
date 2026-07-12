@@ -14,6 +14,9 @@ import type {
 } from "../../types/animal";
 import "./AnimalForm.css";
 
+// Formulário de cadastro/edição de um animal para adoção, usado na seção
+// "Meus pets" da página de Conta. O mesmo formulário serve pros dois casos:
+// se "animalAtual" vier preenchido, edita; senão, cadastra um novo.
 interface AnimalFormProps {
   usuarioId: number;
   animalAtual: AnimalResponse | null;

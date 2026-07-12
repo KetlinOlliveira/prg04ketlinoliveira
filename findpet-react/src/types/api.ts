@@ -1,3 +1,4 @@
+// Formato de página do Spring Data, retornado por todo endpoint de listagem.
 export interface PageResponse<T> {
   content: T[];
   totalElements: number;
@@ -9,6 +10,8 @@ export interface PageResponse<T> {
   empty: boolean;
 }
 
+// Formato padrão de erro devolvido pelo backend (usado por api.ts para
+// montar a mensagem de erro exibida ao usuário).
 export interface ApiErrorResponse {
   status: number;
   erro: string;

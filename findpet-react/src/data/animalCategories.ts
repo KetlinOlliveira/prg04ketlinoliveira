@@ -1,5 +1,7 @@
 import type { CategoryOption } from "../types/animal";
 
+// Categorias fixas exibidas no carrossel de filtro do feed de adoção.
+
 export const animalCategories: CategoryOption[] = [
   {
     id: "todos",

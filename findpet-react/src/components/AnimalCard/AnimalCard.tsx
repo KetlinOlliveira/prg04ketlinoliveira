@@ -3,6 +3,8 @@ import type { AnimalResponse } from "../../types/animal";
 import { getAnimalImageUrl, getSexoIcon } from "../../utils/animalFormat";
 import "./AnimalCard.css";
 
+// Card individual do feed: foto do animal, nome, sexo e localização do
+// tutor. Ao clicar, abre o AnimalModal com os detalhes completos.
 interface AnimalCardProps {
   animal: AnimalResponse;
   onSelect: (animal: AnimalResponse) => void;

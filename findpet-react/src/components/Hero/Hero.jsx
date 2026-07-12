@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import heroAnimais from "../../assets/images/hero-animais.png";
 import "./Hero.css";
 
+// Banner principal da Home: imagem de fundo, chamada e botão que rola até
+// o feed de adoção (#adotar).
 function Hero() {
   return (
     <section className="hero">

@@ -2,6 +2,8 @@ import type { AnimalResponse } from "../../types/animal";
 import AnimalCard from "../AnimalCard/AnimalCard";
 import "./AnimalGrid.css";
 
+// Grade responsiva que renderiza a lista de AnimalCard, cuidando dos estados
+// de carregando/erro/lista vazia do feed de adoção.
 interface AnimalGridProps {
   animals: AnimalResponse[];
   isLoading: boolean;

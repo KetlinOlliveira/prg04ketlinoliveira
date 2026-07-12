@@ -9,6 +9,8 @@ import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
 import { buscarUsuarioPorId } from "../../services/usuarioService";
 import "./AnimalModal.css";
 
+// Modal de detalhes de um animal. Ao clicar em "Quero adotar", abre um
+// segundo modal por cima buscando o contato (email/telefone) de quem cadastrou.
 interface AnimalModalProps {
   animal: AnimalResponse | null;
   onClose: () => void;

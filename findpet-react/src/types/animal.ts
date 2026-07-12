@@ -1,3 +1,6 @@
+// Tipos que espelham as respostas/requisições da API de animais, espécies,
+// raças e adoções, além dos tipos usados pelo filtro de categoria do feed.
+
 export type AnimalCategorySlug = "todos" | "caes" | "gatos" | "roedores" | "aves";
 
 export type CategoryFilter = AnimalCategorySlug;

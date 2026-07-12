@@ -1,6 +1,8 @@
 import { colorPalette } from "../../data/colorPalette";
 import "./ColorSwatches.css";
 
+// Exibe a paleta de cores do projeto (nome, hex e papel de cada cor),
+// usado na página /palheta.
 function ColorSwatches() {
   return (
     <section className="swatches-section">
