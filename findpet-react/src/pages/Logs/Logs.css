@@ -1,0 +1,126 @@
+.logs-page {
+  min-height: 100vh;
+  background-color: var(--creme);
+  padding: 1.5rem 1rem 3rem;
+}
+
+.logs-shell {
+  width: min(1000px, 100%);
+  margin: 0 auto;
+}
+
+.logs-header {
+  margin-bottom: 1.4rem;
+}
+
+.logs-back {
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background-color: var(--pessego);
+  color: var(--cobre);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.logs-back:hover {
+  background-color: var(--cobre);
+  color: var(--creme);
+}
+
+.logs-eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.5rem;
+  color: var(--cobre);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.logs-header h1 {
+  color: var(--cafe);
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.logs-subtitulo {
+  color: var(--magno);
+  line-height: 1.55;
+}
+
+.logs-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 1.3rem;
+  box-shadow: 0 10px 28px rgba(59, 31, 16, 0.08);
+}
+
+.logs-status {
+  padding: 1.4rem 0.5rem;
+  text-align: center;
+  color: var(--magno);
+}
+
+.logs-status--erro {
+  color: var(--rosa);
+}
+
+.logs-table-wrapper {
+  overflow-x: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.logs-table th {
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  color: var(--caramelo);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid rgba(59, 31, 16, 0.08);
+  white-space: nowrap;
+}
+
+.logs-table td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(59, 31, 16, 0.06);
+  color: var(--texto);
+  vertical-align: top;
+}
+
+.logs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.logs-badge {
+  display: inline-flex;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.logs-badge--cadastro_animal {
+  background-color: rgba(160, 85, 53, 0.14);
+  color: var(--cobre);
+}
+
+.logs-badge--atualizacao_animal {
+  background-color: rgba(245, 200, 74, 0.25);
+  color: var(--cafe);
+}
+
+.logs-badge--exclusao_animal {
+  background-color: rgba(201, 76, 94, 0.14);
+  color: var(--rosa);
+}

@@ -4,6 +4,7 @@ import {
   getInicialUsuario,
   getUsuarioLogado,
 } from "../../services/authStorage";
+import { USUARIO_ID_LOGS } from "../../utils/permissions";
 import "./Header.css";
 
 /*
@@ -121,6 +122,12 @@ function Header() {
         <Link to="/#adotar" onClick={closeMenu} className="topbar-nav-link--mobile-only">
           Adotar um amigo
         </Link>
+
+        {usuarioLogado?.id === USUARIO_ID_LOGS && (
+          <Link to="/logs" onClick={closeMenu}>
+            Logs
+          </Link>
+        )}
 
        {usuarioEstaLogado ? (
         <Link to="/conta" onClick={closeMenu}>

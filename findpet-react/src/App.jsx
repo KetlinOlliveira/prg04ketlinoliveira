@@ -6,6 +6,7 @@ import Palette from "./pages/Palette/Palette";
 import Contact from "./pages/Contact/Contact";
 import Account from "./pages/Account/Account";
 import Cuidados from "./pages/Cuidados/Cuidados";
+import Logs from "./pages/Logs/Logs";
 
 import QuizStart from "./pages/Quiz/QuizStart";
 import QuizQuestion from "./pages/Quiz/QuizQuestion";
@@ -41,6 +42,9 @@ function App() {
 
         {/* Wiki de cuidados com animais */}
         <Route path="/cuidados" element={<Cuidados />} />
+
+        {/* Logs de auditoria (acesso restrito) */}
+        <Route path="/logs" element={<Logs />} />
 
         <Route path="/quiz" element={<QuizStart />} />
         
