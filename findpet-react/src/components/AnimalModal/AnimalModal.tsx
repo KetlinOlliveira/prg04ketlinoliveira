@@ -8,6 +8,7 @@ import {
 } from "../../utils/animalFormat";
 import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
 import { buscarUsuarioPorId } from "../../services/usuarioService";
+import { solicitarAdocao } from "../../services/adocaoService";
 import {
   getToken,
   getUsuarioLogado,
@@ -16,7 +17,8 @@ import {
 import "./AnimalModal.css";
 
 // Modal de detalhes de um animal. Ao clicar em "Quero adotar", abre um
-// segundo modal por cima buscando o contato (email/telefone) de quem cadastrou.
+// segundo modal por cima buscando o contato (email/telefone) de quem cadastrou
+// e permitindo enviar uma solicitação formal de adoção (POST /api/adocoes).
 interface AnimalModalProps {
   animal: AnimalResponse | null;
   onClose: () => void;
@@ -39,6 +41,10 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
   const [erroContato, setErroContato] = useState("");
   const [imagemExpandida, setImagemExpandida] = useState(false);
 
+  const [solicitandoAdocao, setSolicitandoAdocao] = useState(false);
+  const [adocaoEnviada, setAdocaoEnviada] = useState(false);
+  const [erroAdocao, setErroAdocao] = useState("");
+
   useEffect(() => {
     setImgError(false);
     setMostrarContato(false);
@@ -47,6 +53,9 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
     setContato(null);
     setErroContato("");
     setImagemExpandida(false);
+    setSolicitandoAdocao(false);
+    setAdocaoEnviada(false);
+    setErroAdocao("");
   }, [animal]);
 
   useEffect(() => {
@@ -82,6 +91,11 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
   }
 
   const imageUrl = getAnimalImageUrl(animal.fotoUrl);
+  const usuarioLogado = getUsuarioLogado();
+  const podeSolicitarAdocao =
+    !!usuarioLogado &&
+    usuarioLogado.id !== animal.usuarioId &&
+    animal.status === "DISPONIVEL";
 
   async function handleQueroAdotar() {
     setMostrarContato(true);
@@ -129,6 +143,39 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
       setPrecisaLogin(true);
     } finally {
       setCarregandoContato(false);
+    }
+  }
+
+  async function handleSolicitarAdocao() {
+    const usuarioLogado = getUsuarioLogado();
+
+    if (!usuarioLogado || !getToken() || !animal) {
+      setSessaoExpirada(false);
+      setPrecisaLogin(true);
+      return;
+    }
+
+    try {
+      setSolicitandoAdocao(true);
+      setErroAdocao("");
+
+      await solicitarAdocao({
+        usuarioId: usuarioLogado.id,
+        animalId: animal.id,
+      });
+
+      setAdocaoEnviada(true);
+    } catch (error) {
+      // O backend recusa com uma mensagem de negócio (ex.: "animal não está
+      // disponível") quando já existe uma solicitação em andamento — essa
+      // mensagem já é amigável o bastante para mostrar direto ao usuário.
+      setErroAdocao(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível enviar a solicitação de adoção."
+      );
+    } finally {
+      setSolicitandoAdocao(false);
     }
   }
 
@@ -315,6 +362,52 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
                           </li>
                         )}
                       </ul>
+
+                      {podeSolicitarAdocao && !adocaoEnviada && (
+                        <>
+                          <button
+                            type="button"
+                            className="animal-modal__contato-solicitar"
+                            onClick={handleSolicitarAdocao}
+                            disabled={solicitandoAdocao}
+                          >
+                            {solicitandoAdocao
+                              ? "Enviando solicitação..."
+                              : "Confirmar solicitação de adoção"}
+                          </button>
+
+                          {erroAdocao && (
+                            <p className="animal-modal__contato-status animal-modal__contato-status--erro">
+                              {erroAdocao}
+                            </p>
+                          )}
+                        </>
+                      )}
+
+                      {adocaoEnviada && (
+                        <p className="animal-modal__contato-status animal-modal__contato-status--sucesso">
+                          Solicitação enviada! Acompanhe o andamento em "Minha
+                          conta" → "Solicitações de adoção".
+                        </p>
+                      )}
+
+                      {!!usuarioLogado &&
+                        usuarioLogado.id === animal.usuarioId && (
+                          <p className="animal-modal__contato-status">
+                            Você é quem cadastrou esse animal.
+                          </p>
+                        )}
+
+                      {!!usuarioLogado &&
+                        usuarioLogado.id !== animal.usuarioId &&
+                        animal.status !== "DISPONIVEL" &&
+                        !adocaoEnviada && (
+                          <p className="animal-modal__contato-status">
+                            Este animal já está{" "}
+                            {formatAnimalStatus(animal.status).toLowerCase()}{" "}
+                            e não aceita novas solicitações no momento.
+                          </p>
+                        )}
                     </>
                   )}
                 </>

@@ -226,6 +226,18 @@
   letter-spacing: -0.03em;
 }
 
+.account-subtitle {
+  margin-top: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: var(--cafe);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.account-subtitle:first-of-type {
+  margin-top: 0.6rem;
+}
+
 /* =========================
    Card de perfil
 ========================= */

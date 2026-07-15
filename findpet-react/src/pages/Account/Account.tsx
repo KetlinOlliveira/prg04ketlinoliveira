@@ -16,12 +16,19 @@ import {
   listarAnimais,
 } from "../../services/animalService";
 import {
+  atualizarStatusAdocao,
+  excluirAdocao,
+  listarAdocoes,
+} from "../../services/adocaoService";
+import {
+  formatAdocaoStatus,
   formatAnimalStatus,
   getAnimalImageUrl,
 } from "../../utils/animalFormat";
 import { redimensionarImagem } from "../../utils/imageResize";
 import type { EnderecoResponse, PessoaResponse } from "../../types/endereco";
 import type { AnimalResponse } from "../../types/animal";
+import type { AdocaoResponse } from "../../types/adocao";
 import "./Account.css";
 
 function Account() {
@@ -44,6 +51,10 @@ function Account() {
   const [animalEmEdicao, setAnimalEmEdicao] = useState<AnimalResponse | null>(
     null
   );
+
+  const [adocoes, setAdocoes] = useState<AdocaoResponse[]>([]);
+  const [carregandoAdocoes, setCarregandoAdocoes] = useState(true);
+  const [erroAdocaoAcao, setErroAdocaoAcao] = useState("");
 
   const [sessaoVerificada, setSessaoVerificada] = useState(false);
 
@@ -142,6 +153,28 @@ function Account() {
     }
 
     carregarAnimais();
+  }, [usuario, sessaoVerificada]);
+
+  useEffect(() => {
+    async function carregarAdocoes() {
+      if (!usuario?.id || !sessaoVerificada) {
+        return;
+      }
+
+      try {
+        setCarregandoAdocoes(true);
+
+        const response = await listarAdocoes();
+
+        setAdocoes(response.content);
+      } catch {
+        setAdocoes([]);
+      } finally {
+        setCarregandoAdocoes(false);
+      }
+    }
+
+    carregarAdocoes();
   }, [usuario, sessaoVerificada]);
 
   if (!usuario) {
@@ -253,6 +286,56 @@ function Account() {
     }
   }
 
+  async function handleCancelarSolicitacao(adocao: AdocaoResponse) {
+    const confirmado = window.confirm(
+      `Cancelar sua solicitação de adoção de ${adocao.animalNome ?? "este animal"}?`
+    );
+
+    if (!confirmado) {
+      return;
+    }
+
+    try {
+      setErroAdocaoAcao("");
+      await excluirAdocao(adocao.id);
+      setAdocoes((atual) => atual.filter((item) => item.id !== adocao.id));
+    } catch (error) {
+      setErroAdocaoAcao(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível cancelar a solicitação."
+      );
+    }
+  }
+
+  async function handleResponderSolicitacao(
+    adocao: AdocaoResponse,
+    status: "APROVADA" | "RECUSADA"
+  ) {
+    try {
+      setErroAdocaoAcao("");
+      const atualizada = await atualizarStatusAdocao(adocao.id, status);
+      setAdocoes((atual) =>
+        atual.map((item) => (item.id === adocao.id ? atualizada : item))
+      );
+    } catch (error) {
+      setErroAdocaoAcao(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível atualizar a solicitação."
+      );
+    }
+  }
+
+  const minhasSolicitacoes = adocoes.filter(
+    (adocao) => adocao.usuarioId === usuario.id
+  );
+
+  const meusAnimaisIds = new Set(meusAnimais.map((animal) => animal.id));
+  const solicitacoesRecebidas = adocoes.filter((adocao) =>
+    meusAnimaisIds.has(adocao.animalId)
+  );
+
   return (
     <main className="account-page">
       <section className="account-shell">
@@ -280,6 +363,7 @@ function Account() {
             <a href="#perfil">Perfil</a>
             <a href="#endereco">Endereço</a>
             <a href="#pets">Meus pets</a>
+            <a href="#adocoes">Solicitações de adoção</a>
             <button type="button" onClick={handleLogout}>
                   Sair
             </button>
@@ -541,6 +625,112 @@ function Account() {
                   );
                 })}
               </ul>
+            )}
+          </section>
+
+          <section className="account-card" id="adocoes">
+            <div className="account-card__header">
+              <h2>Solicitações de adoção</h2>
+              <p className="account-muted">
+                Acompanhe os pedidos de adoção que você enviou e os que
+                recebeu para os pets que cadastrou.
+              </p>
+            </div>
+
+            {erroAdocaoAcao && (
+              <p className="account-foto-erro">{erroAdocaoAcao}</p>
+            )}
+
+            {carregandoAdocoes ? (
+              <p className="account-muted">Carregando solicitações...</p>
+            ) : (
+              <>
+                <h3 className="account-subtitle">Enviadas por mim</h3>
+
+                {minhasSolicitacoes.length === 0 ? (
+                  <p className="account-muted">
+                    Você ainda não solicitou a adoção de nenhum pet.
+                  </p>
+                ) : (
+                  <ul className="account-pets-list">
+                    {minhasSolicitacoes.map((adocao) => (
+                      <li key={adocao.id} className="account-pet-card">
+                        <div className="account-pet-card__info">
+                          <strong>{adocao.animalNome ?? "Animal"}</strong>
+                          <span className="account-pet-card__status">
+                            {formatAdocaoStatus(adocao.status)}
+                          </span>
+                          {adocao.observacao && (
+                            <span>{adocao.observacao}</span>
+                          )}
+                        </div>
+
+                        {adocao.status === "SOLICITADA" && (
+                          <div className="account-pet-card__actions">
+                            <button
+                              type="button"
+                              className="account-pet-card__delete"
+                              onClick={() => handleCancelarSolicitacao(adocao)}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <h3 className="account-subtitle">Recebidas para meus pets</h3>
+
+                {solicitacoesRecebidas.length === 0 ? (
+                  <p className="account-muted">
+                    Nenhuma solicitação recebida até o momento.
+                  </p>
+                ) : (
+                  <ul className="account-pets-list">
+                    {solicitacoesRecebidas.map((adocao) => (
+                      <li key={adocao.id} className="account-pet-card">
+                        <div className="account-pet-card__info">
+                          <strong>
+                            {adocao.usuarioNome ?? "Interessado"} quer adotar{" "}
+                            {adocao.animalNome ?? "este pet"}
+                          </strong>
+                          <span className="account-pet-card__status">
+                            {formatAdocaoStatus(adocao.status)}
+                          </span>
+                          {adocao.observacao && (
+                            <span>{adocao.observacao}</span>
+                          )}
+                        </div>
+
+                        {(adocao.status === "SOLICITADA" ||
+                          adocao.status === "EM_ANALISE") && (
+                          <div className="account-pet-card__actions">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleResponderSolicitacao(adocao, "APROVADA")
+                              }
+                            >
+                              Aprovar
+                            </button>
+                            <button
+                              type="button"
+                              className="account-pet-card__delete"
+                              onClick={() =>
+                                handleResponderSolicitacao(adocao, "RECUSADA")
+                              }
+                            >
+                              Recusar
+                            </button>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
             )}
           </section>
         </section>

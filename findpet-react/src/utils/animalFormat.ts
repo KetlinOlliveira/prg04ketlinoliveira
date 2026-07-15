@@ -13,6 +13,20 @@ export function formatAnimalStatus(status: string): string {
   return labels[status] ?? status;
 }
 
+// Traduz o status da solicitação de adoção (enum do backend) para o texto
+// exibido na tela.
+export function formatAdocaoStatus(status: string): string {
+  const labels: Record<string, string> = {
+    SOLICITADA: "Solicitada",
+    EM_ANALISE: "Em análise",
+    APROVADA: "Aprovada",
+    RECUSADA: "Recusada",
+    CANCELADA: "Cancelada",
+  };
+
+  return labels[status] ?? status;
+}
+
 // Converte "MACHO"/"FEMEA" no símbolo ♂/♀ exibido nos cards e no modal.
 export function getSexoIcon(sexo?: string | null): string {
   const valor = normalizeText(sexo ?? "");

@@ -313,6 +313,33 @@
   color: var(--rosa);
 }
 
+.animal-modal__contato-status--sucesso {
+  color: var(--cobre);
+  font-weight: 600;
+}
+
+.animal-modal__contato-solicitar {
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--creme);
+  background-color: var(--cobre);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.animal-modal__contato-solicitar:hover:not(:disabled) {
+  background-color: var(--magno);
+}
+
+.animal-modal__contato-solicitar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .animal-modal__contato-login {
   display: inline-flex;
   align-items: center;
