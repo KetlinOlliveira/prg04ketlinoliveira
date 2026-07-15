@@ -8,7 +8,11 @@ import {
 } from "../../utils/animalFormat";
 import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
 import { buscarUsuarioPorId } from "../../services/usuarioService";
-import { getUsuarioLogado } from "../../services/authStorage";
+import {
+  getToken,
+  getUsuarioLogado,
+  removerUsuarioLogado,
+} from "../../services/authStorage";
 import "./AnimalModal.css";
 
 // Modal de detalhes de um animal. Ao clicar em "Quero adotar", abre um
@@ -29,6 +33,7 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
 
   const [mostrarContato, setMostrarContato] = useState(false);
   const [precisaLogin, setPrecisaLogin] = useState(false);
+  const [sessaoExpirada, setSessaoExpirada] = useState(false);
   const [contato, setContato] = useState<ContatoDono | null>(null);
   const [carregandoContato, setCarregandoContato] = useState(false);
   const [erroContato, setErroContato] = useState("");
@@ -38,6 +43,7 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
     setImgError(false);
     setMostrarContato(false);
     setPrecisaLogin(false);
+    setSessaoExpirada(false);
     setContato(null);
     setErroContato("");
     setImagemExpandida(false);
@@ -80,12 +86,18 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
   async function handleQueroAdotar() {
     setMostrarContato(true);
 
-    if (!getUsuarioLogado()) {
+    // Além de existir um usuário salvo, precisa existir um token válido —
+    // sessões salvas antes do login com JWT (ou expiradas, o token dura só
+    // 1h) têm o usuário salvo mas nenhum token, e toda chamada autenticada
+    // falharia silenciosamente se não checássemos isso aqui.
+    if (!getUsuarioLogado() || !getToken()) {
+      setSessaoExpirada(false);
       setPrecisaLogin(true);
       return;
     }
 
     setPrecisaLogin(false);
+    setSessaoExpirada(false);
 
     if (contato || !animal?.usuarioId) {
       return;
@@ -95,10 +107,16 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
       setCarregandoContato(true);
       setErroContato("");
 
-      const [usuario, pessoa] = await Promise.all([
-        buscarUsuarioPorId(animal.usuarioId).catch(() => null),
-        buscarPessoaPorUsuarioId(animal.usuarioId).catch(() => null),
-      ]);
+      // A busca do usuário não é "abafada": se o token expirou no meio da
+      // sessão (dura só 1h) o servidor recusa, e isso é tratado como sessão
+      // expirada em vez de cair na mensagem genérica de "tutor não
+      // cadastrou contato". Já a busca da pessoa pode legitimamente não
+      // existir (tutor não cadastrou telefone ainda), então essa sim segue
+      // com fallback silencioso.
+      const usuario = await buscarUsuarioPorId(animal.usuarioId);
+      const pessoa = await buscarPessoaPorUsuarioId(animal.usuarioId).catch(
+        () => null
+      );
 
       setContato({
         nome: usuario?.nome ?? animal.usuarioNome ?? "Tutor do animal",
@@ -106,7 +124,9 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
         telefone: pessoa?.telefone,
       });
     } catch {
-      setErroContato("Não foi possível carregar os dados de contato.");
+      removerUsuarioLogado();
+      setSessaoExpirada(true);
+      setPrecisaLogin(true);
     } finally {
       setCarregandoContato(false);
     }
@@ -233,14 +253,20 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
               </button>
 
               <h3 id="animal-modal-contato-title">
-                {precisaLogin ? "Faça login para adotar" : "Contato para adoção"}
+                {precisaLogin
+                  ? sessaoExpirada
+                    ? "Sessão expirada"
+                    : "Faça login para adotar"
+                  : "Contato para adoção"}
               </h3>
 
               {precisaLogin ? (
                 <>
                   <p className="animal-modal__contato-intro">
-                    Você precisa estar logado para ver os dados de contato de
-                    quem cadastrou <strong>{animal.nome}</strong>.
+                    {sessaoExpirada
+                      ? "Sua sessão expirou. Faça login novamente para ver os dados de contato de "
+                      : "Você precisa estar logado para ver os dados de contato de quem cadastrou "}
+                    <strong>{animal.nome}</strong>.
                   </p>
 
                   <Link to="/login" className="animal-modal__contato-login">
