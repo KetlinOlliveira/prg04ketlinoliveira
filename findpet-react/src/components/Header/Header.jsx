@@ -57,7 +57,11 @@ function Header() {
         {usuarioEstaLogado ? (
           <Link to="/conta" className="btn-conta-header">
             <span className="btn-conta-header__avatar">
-              {getInicialUsuario(usuarioLogado)}
+              {usuarioLogado.fotoUrl ? (
+                <img src={usuarioLogado.fotoUrl} alt="" />
+              ) : (
+                getInicialUsuario(usuarioLogado)
+              )}
             </span>
             Conta
           </Link>

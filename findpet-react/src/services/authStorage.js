@@ -1,6 +1,7 @@
-// Guarda o usuário logado no localStorage (sem token/JWT — só o objeto do
-// usuário) e avisa o resto do app via evento customizado quando ele muda.
+// Guarda o usuário logado e o token JWT no localStorage, e avisa o resto do
+// app via evento customizado quando a sessão muda.
 const STORAGE_KEY = "usuarioLogado";
+const TOKEN_KEY = "authToken";
 
 // Lê o usuário logado salvo no navegador, ou null se não houver/estiver corrompido.
 export function getUsuarioLogado() {
@@ -18,9 +19,18 @@ export function getUsuarioLogado() {
   }
 }
 
-// Salva o usuário logado após login/cadastro bem-sucedido.
-export function salvarUsuarioLogado(usuario) {
+// Lê o token JWT salvo, ou null se não houver (usuário deslogado).
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+// Salva o usuário logado e o token JWT após login bem-sucedido.
+export function salvarUsuarioLogado(usuario, token) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(usuario));
+
+  if (token) {
+    localStorage.setItem(TOKEN_KEY, token);
+  }
 
   window.dispatchEvent(new Event("usuarioLogadoAtualizado"));
 }
@@ -28,6 +38,7 @@ export function salvarUsuarioLogado(usuario) {
 // Remove a sessão salva (usado no logout e quando a sessão é inválida).
 export function removerUsuarioLogado() {
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(TOKEN_KEY);
 
   window.dispatchEvent(new Event("usuarioLogadoAtualizado"));
 }

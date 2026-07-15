@@ -117,12 +117,38 @@
   font-size: 1.4rem;
   font-weight: 700;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.account-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .account-avatar--large {
   width: 86px;
   height: 86px;
   font-size: 2.2rem;
+}
+
+.account-foto-action {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--cobre);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-foto-action:hover {
+  text-decoration: underline;
+}
+
+.account-foto-erro {
+  color: var(--rosa);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
 }
 
 /* =========================

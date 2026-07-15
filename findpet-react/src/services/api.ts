@@ -1,4 +1,5 @@
 import type { ApiErrorResponse } from "../types/api";
+import { getToken } from "./authStorage";
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_URL ?? "http://localhost:8080/api";
@@ -11,10 +12,13 @@ async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
+  const token = getToken();
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
   });
