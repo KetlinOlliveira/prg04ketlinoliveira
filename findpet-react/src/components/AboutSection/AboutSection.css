@@ -17,7 +17,6 @@
 }
 
 .about-section__image {
-  right: 1rem;
   width: 85%;
   max-height: 340px;
   object-fit: cover;

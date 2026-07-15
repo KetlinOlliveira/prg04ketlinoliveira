@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { AnimalResponse } from "../../types/animal";
 import {
   formatAnimalIdade,
@@ -7,6 +8,7 @@ import {
 } from "../../utils/animalFormat";
 import { buscarPessoaPorUsuarioId } from "../../services/pessoaService";
 import { buscarUsuarioPorId } from "../../services/usuarioService";
+import { getUsuarioLogado } from "../../services/authStorage";
 import "./AnimalModal.css";
 
 // Modal de detalhes de um animal. Ao clicar em "Quero adotar", abre um
@@ -26,15 +28,19 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
   const [imgError, setImgError] = useState<boolean>(false);
 
   const [mostrarContato, setMostrarContato] = useState(false);
+  const [precisaLogin, setPrecisaLogin] = useState(false);
   const [contato, setContato] = useState<ContatoDono | null>(null);
   const [carregandoContato, setCarregandoContato] = useState(false);
   const [erroContato, setErroContato] = useState("");
+  const [imagemExpandida, setImagemExpandida] = useState(false);
 
   useEffect(() => {
     setImgError(false);
     setMostrarContato(false);
+    setPrecisaLogin(false);
     setContato(null);
     setErroContato("");
+    setImagemExpandida(false);
   }, [animal]);
 
   useEffect(() => {
@@ -44,6 +50,10 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
 
     function handleKey(event: KeyboardEvent) {
       if (event.key === "Escape") {
+        if (imagemExpandida) {
+          setImagemExpandida(false);
+          return;
+        }
         if (mostrarContato) {
           setMostrarContato(false);
           return;
@@ -59,7 +69,7 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
       document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
     };
-  }, [animal, onClose, mostrarContato]);
+  }, [animal, onClose, mostrarContato, imagemExpandida]);
 
   if (!animal) {
     return null;
@@ -69,6 +79,13 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
 
   async function handleQueroAdotar() {
     setMostrarContato(true);
+
+    if (!getUsuarioLogado()) {
+      setPrecisaLogin(true);
+      return;
+    }
+
+    setPrecisaLogin(false);
 
     if (contato || !animal?.usuarioId) {
       return;
@@ -96,6 +113,7 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
   }
 
   return (
+    <>
     <div
       className="animal-modal__overlay"
       onClick={onClose}
@@ -119,12 +137,22 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
               {animal.nome.charAt(0)}
             </span>
           ) : (
-            <img
-              className="animal-modal__image"
-              src={imageUrl}
-              alt={`Foto de ${animal.nome}`}
-              onError={() => setImgError(true)}
-            />
+            <button
+              type="button"
+              className="animal-modal__media-button"
+              onClick={() => setImagemExpandida(true)}
+              aria-label={`Ver foto de ${animal.nome} em tamanho maior`}
+            >
+              <img
+                className="animal-modal__image"
+                src={imageUrl}
+                alt={`Foto de ${animal.nome}`}
+                onError={() => setImgError(true)}
+              />
+              <span className="animal-modal__zoom-hint" aria-hidden="true">
+                🔍
+              </span>
+            </button>
           )}
         </div>
 
@@ -204,47 +232,65 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
                 ×
               </button>
 
-              <h3 id="animal-modal-contato-title">Contato para adoção</h3>
+              <h3 id="animal-modal-contato-title">
+                {precisaLogin ? "Faça login para adotar" : "Contato para adoção"}
+              </h3>
 
-              {carregandoContato && (
-                <p className="animal-modal__contato-status">
-                  Carregando dados de contato...
-                </p>
-              )}
-
-              {erroContato && (
-                <p className="animal-modal__contato-status animal-modal__contato-status--erro">
-                  {erroContato}
-                </p>
-              )}
-
-              {contato && !carregandoContato && (
+              {precisaLogin ? (
                 <>
                   <p className="animal-modal__contato-intro">
-                    Fale com <strong>{contato.nome}</strong> para combinar a
-                    adoção de <strong>{animal.nome}</strong>:
+                    Você precisa estar logado para ver os dados de contato de
+                    quem cadastrou <strong>{animal.nome}</strong>.
                   </p>
 
-                  <ul className="animal-modal__contato-lista">
-                    {contato.email && (
-                      <li>
-                        <span aria-hidden="true">📧</span> {contato.email}
-                      </li>
-                    )}
+                  <Link to="/login" className="animal-modal__contato-login">
+                    Fazer login
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {carregandoContato && (
+                    <p className="animal-modal__contato-status">
+                      Carregando dados de contato...
+                    </p>
+                  )}
 
-                    {contato.telefone && (
-                      <li>
-                        <span aria-hidden="true">📱</span> {contato.telefone}
-                      </li>
-                    )}
+                  {erroContato && (
+                    <p className="animal-modal__contato-status animal-modal__contato-status--erro">
+                      {erroContato}
+                    </p>
+                  )}
 
-                    {!contato.email && !contato.telefone && (
-                      <li>
-                        Esse tutor ainda não cadastrou um contato. Tente pelo
-                        formulário de contato do FindPet.
-                      </li>
-                    )}
-                  </ul>
+                  {contato && !carregandoContato && (
+                    <>
+                      <p className="animal-modal__contato-intro">
+                        Fale com <strong>{contato.nome}</strong> para combinar
+                        a adoção de <strong>{animal.nome}</strong>:
+                      </p>
+
+                      <ul className="animal-modal__contato-lista">
+                        {contato.email && (
+                          <li>
+                            <span aria-hidden="true">📧</span> {contato.email}
+                          </li>
+                        )}
+
+                        {contato.telefone && (
+                          <li>
+                            <span aria-hidden="true">📱</span>{" "}
+                            {contato.telefone}
+                          </li>
+                        )}
+
+                        {!contato.email && !contato.telefone && (
+                          <li>
+                            Esse tutor ainda não cadastrou um contato. Tente
+                            pelo formulário de contato do FindPet.
+                          </li>
+                        )}
+                      </ul>
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -252,6 +298,33 @@ function AnimalModal({ animal, onClose }: AnimalModalProps) {
         )}
       </div>
     </div>
+
+    {imagemExpandida && imageUrl && (
+      <div
+        className="animal-modal__lightbox"
+        onClick={() => setImagemExpandida(false)}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Foto de ${animal.nome} em tamanho maior`}
+      >
+        <button
+          type="button"
+          className="animal-modal__lightbox-close"
+          onClick={() => setImagemExpandida(false)}
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+
+        <img
+          className="animal-modal__lightbox-image"
+          src={imageUrl}
+          alt={`Foto de ${animal.nome} em tamanho maior`}
+          onClick={(event) => event.stopPropagation()}
+        />
+      </div>
+    )}
+    </>
   );
 }
 
