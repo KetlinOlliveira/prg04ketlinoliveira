@@ -1,46 +1,37 @@
 import { Link } from "react-router-dom";
-import {
-  FaEnvelope,
-  FaFacebookF,
-  FaInstagram,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaTiktok,
-  FaYoutube,
-} from "react-icons/fa";
-import patinhaLogo from "../../assets/images/patinha-logo-transp.png";
+import { FaPaw } from "react-icons/fa";
 import "./Footer.css";
 
-// Rodapé do site: logo + newsletter (fictícia), menu de navegação, contato
-// e barra de copyright com redes sociais (links fictícios, sem back-end).
+// Rodapé do site: onda decorativa, endereço/menu/redes sociais fictícias e
+// um card de contato (formulário sem back-end, só ilustrativo).
 function Footer() {
   return (
     <footer className="footer">
+      <div className="footer__wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <path
+            d="M0,40 C240,100 480,0 720,40 C960,80 1200,0 1440,40 L1440,100 L0,100 Z"
+            fill="var(--mogno)"
+          />
+        </svg>
+      </div>
+
       <div className="footer__inner">
         <div className="footer__brand">
+          <FaPaw className="footer__paw" aria-hidden="true" />
           <div className="footer__logo">
-            <img src={patinhaLogo} alt="" aria-hidden="true" />
-            <span>
-              Find<strong>Pet</strong>
-            </span>
+            Find<strong>Pet</strong>
           </div>
+        </div>
 
-          <p className="footer__tagline">
-            Assine nossa newsletter e receba novidades sobre adoção
-            responsável.
-          </p>
-
-          <form
-            className="footer__newsletter"
-            onSubmit={(event) => event.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Seu endereço de email"
-              aria-label="Seu endereço de email"
-            />
-            <button type="submit">Inscrever</button>
-          </form>
+        <div className="footer__column">
+          <h3>Endereço</h3>
+          <ul>
+            <li>Rua Pet, Número 1</li>
+            <li>Irecê - BA</li>
+            <li>CEP 44900-000</li>
+            <li>Brasil</li>
+          </ul>
         </div>
 
         <div className="footer__column">
@@ -49,47 +40,46 @@ function Footer() {
             <Link to="/">Início</Link>
             <Link to="/#adotar">Adotar</Link>
             <Link to="/quiz">Quiz</Link>
-            <Link to="/palheta">Identidade visual</Link>
             <Link to="/contato">Contato</Link>
           </nav>
         </div>
 
         <div className="footer__column">
-          <h3>Contato</h3>
-          <ul className="footer__contato">
-            <li>
-              <FaMapMarkerAlt aria-hidden="true" />
-              Rua Pet, Número 1
-            </li>
-            <li>
-              <FaEnvelope aria-hidden="true" />
-              findpet@gmail.com
-            </li>
-            <li>
-              <FaPhoneAlt aria-hidden="true" />
-              (11) 2222-3333
-            </li>
-          </ul>
+          <h3>Siga-nos</h3>
+          <nav aria-label="Redes sociais do FindPet">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">TikTok</a>
+            <a href="#">YouTube</a>
+          </nav>
+        </div>
+
+        <div className="footer__contact-card">
+          <h3>Fale conosco</h3>
+
+          <form onSubmit={(event) => event.preventDefault()}>
+            <input
+              type="email"
+              placeholder="Seu email"
+              aria-label="Seu email"
+            />
+            <input
+              type="tel"
+              placeholder="Seu telefone"
+              aria-label="Seu telefone"
+            />
+            <input
+              type="text"
+              placeholder="Assunto (opcional)"
+              aria-label="Assunto"
+            />
+            <button type="submit">Enviar</button>
+          </form>
         </div>
       </div>
 
       <div className="footer__bottom">
         <p>Copyright © 2026 FindPet. Todos os direitos reservados.</p>
-
-        <div className="footer__social">
-          <a href="#" aria-label="Instagram do FindPet">
-            <FaInstagram />
-          </a>
-          <a href="#" aria-label="Facebook do FindPet">
-            <FaFacebookF />
-          </a>
-          <a href="#" aria-label="TikTok do FindPet">
-            <FaTiktok />
-          </a>
-          <a href="#" aria-label="YouTube do FindPet">
-            <FaYoutube />
-          </a>
-        </div>
       </div>
     </footer>
   );

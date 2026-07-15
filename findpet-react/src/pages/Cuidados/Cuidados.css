@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap");
+
+.cuidados-page {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: var(--creme);
+}
+
+/* =========================
+   Sidebar / menu de categorias
+========================= */
+
+.cuidados-sidebar {
+  flex-shrink: 0;
+  width: 280px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.8rem 1.4rem;
+  background-color: #ffffff;
+  border-right: 1px solid rgba(59, 31, 16, 0.1);
+}
+
+.cuidados-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--cafe);
+}
+
+.cuidados-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.cuidados-brand strong {
+  color: var(--rosa);
+}
+
+.cuidados-sidebar__label {
+  margin-bottom: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--caramelo);
+}
+
+.cuidados-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.4rem;
+}
+
+.cuidados-sidebar nav a {
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+  border-left: 3px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--magno);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cuidados-sidebar nav a:hover {
+  background-color: var(--creme);
+  color: var(--cobre);
+}
+
+.cuidados-link--ativo {
+  background-color: var(--pessego);
+  border-left-color: var(--cobre);
+  color: var(--cafe) !important;
+}
+
+.cuidados-sidebar__voltar {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(59, 31, 16, 0.1);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cobre);
+}
+
+.cuidados-sidebar__voltar:hover {
+  color: var(--rosa);
+}
+
+/* Botão que abre o menu no mobile + fundo escurecido */
+.cuidados-menu-toggle {
+  display: none;
+}
+
+.cuidados-menu-backdrop {
+  display: none;
+}
+
+/* =========================
+   Conteúdo
+========================= */
+
+.cuidados-content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem clamp(1.2rem, 5vw, 4rem) 5rem;
+}
+
+.cuidados-header {
+  max-width: 68ch;
+  margin: 0 auto 2.6rem;
+  text-align: center;
+}
+
+.cuidados-eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.7rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background-color: var(--pessego);
+  color: var(--cobre);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cuidados-header h1 {
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  font-weight: 800;
+  color: var(--cafe);
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+}
+
+.cuidados-subtitulo {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--magno);
+}
+
+.cuidados-secao {
+  max-width: 68ch;
+  margin: 0 auto 3rem;
+  padding-top: 1.4rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.cuidados-secao + .cuidados-secao {
+  border-top: 1px solid rgba(59, 31, 16, 0.1);
+}
+
+.cuidados-secao h2 {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--cafe);
+  margin-bottom: 1rem;
+}
+
+.cuidados-secao h3 {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cobre);
+  margin: 1.6rem 0 0.6rem;
+}
+
+.cuidados-secao p {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--texto);
+  margin-bottom: 1rem;
+}
+
+.cuidados-secao ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0 0 1.2rem;
+  padding-left: 1.3rem;
+  list-style: disc;
+}
+
+.cuidados-secao li {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--texto);
+}
+
+.cuidados-secao li strong {
+  color: var(--cafe);
+}
+
+/* =========================
+   Responsividade (menu retrátil no mobile)
+========================= */
+
+@media (max-width: 900px) {
+  .cuidados-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: sticky;
+    top: 0.9rem;
+    left: 1.2rem;
+    margin: 0.9rem 0 0 1.2rem;
+    padding: 0.7rem 1.1rem;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--cobre);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(160, 85, 53, 0.28);
+    z-index: 40;
+    width: fit-content;
+  }
+
+  .cuidados-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    width: min(300px, 82vw);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 12px 0 30px rgba(59, 31, 16, 0.2);
+  }
+
+  .cuidados-sidebar--aberta {
+    transform: translateX(0);
+  }
+
+  .cuidados-menu-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(59, 31, 16, 0.45);
+  }
+
+  .cuidados-content {
+    padding-top: 1rem;
+  }
+}

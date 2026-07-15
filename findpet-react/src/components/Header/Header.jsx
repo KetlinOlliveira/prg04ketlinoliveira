@@ -102,6 +102,10 @@ function Header() {
           Início
         </Link>
 
+        <Link to="/cuidados" onClick={closeMenu}>
+          Cuidados
+        </Link>
+
         <Link to="/quiz" onClick={closeMenu} className="topbar-nav-link--mobile-only">
           Fazer quiz
         </Link>

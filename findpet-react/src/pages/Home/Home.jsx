@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Hero from "../../components/Hero/Hero";
 import AdoptionSection from "../../components/AdoptionSection/AdoptionSection";
-import AboutSection from "../../components/AboutSection/AboutSection";
+import StepsSection from "../../components/StepsSection/StepsSection";
 import Footer from "../../components/Footer/Footer";
 import "./Home.css";
 
@@ -26,7 +26,7 @@ function Home() {
       <Header />
       <Hero />
       <AdoptionSection />
-      <AboutSection />
+      <StepsSection />
       <Footer />
     </div>
   );
